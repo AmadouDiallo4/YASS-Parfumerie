@@ -409,6 +409,7 @@ $("checkout-overlay").addEventListener("click", closeCheckout);
 
 $("checkout-form").querySelector('[name="checkout-paiement"]').addEventListener("change", (e) => {
   $("checkout-summary").textContent = buildCheckoutSummary(e.target.value);
+  $("checkout-payment-info").hidden = e.target.value !== "Wave / Orange Money";
 });
 
 $("checkout-form").addEventListener("submit", (e) => {
