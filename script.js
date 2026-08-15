@@ -25,21 +25,36 @@ const products = [
   { id: 28, name: "SKIN OF OUD",       category: "parfum", gender: "homme", icon: "🥇", price: 20000, desc: "Oud sur peau, chaleur et intimité naturelle.",               image: "images/hommes/SKIN_OF_OUD.jpeg" },
   { id: 29, name: "VERTIGO",           category: "parfum", gender: "homme", icon: "🌀", price: 30000, desc: "Tourbillon de sensations, profondeur et intensité.",         image: "images/hommes/VERTIGO.jpeg" },
 
-  // Savons
-  { id: 6,  name: "Savon Lavande",       category: "savon",  gender: "mixte",  icon: "💜", price: 6.90,  desc: "Savon artisanal à la lavande et huile d'argan. 100 g.",            image: "images/savon-lavande.jpg" },
-  { id: 7,  name: "Savon Karité",        category: "savon",  gender: "mixte",  icon: "🧼", price: 7.50,  desc: "Beurre de karité pur, hydratation intense. 100 g.",                image: "images/savon-karite.jpg" },
-  { id: 8,  name: "Savon Charbon Actif", category: "savon",  gender: "mixte",  icon: "⚫", price: 8.20,  desc: "Purifiant et détoxifiant, peau nette. 100 g.",                     image: "images/savon-charbon.jpg" },
-  { id: 9,  name: "Savon Rose & Miel",   category: "savon",  gender: "mixte",  icon: "🌸", price: 7.90,  desc: "Douceur et éclat, formule nourrissante. 100 g.",                   image: "images/savon-rose-miel.jpg" },
+  // Cosmétiques
+  { id: 6,  name: "Savon Lavande",            category: "cosmetique",      gender: "mixte", icon: "💜", price: 6.90,  desc: "Savon artisanal à la lavande et huile d'argan. 100 g.",      image: "images/savon-lavande.jpg" },
+  { id: 7,  name: "Savon Karité",             category: "cosmetique",      gender: "mixte", icon: "🧼", price: 7.50,  desc: "Beurre de karité pur, hydratation intense. 100 g.",          image: "images/savon-karite.jpg" },
+  { id: 8,  name: "Savon Charbon Actif",      category: "cosmetique",      gender: "mixte", icon: "⚫", price: 8.20,  desc: "Purifiant et détoxifiant, peau nette. 100 g.",               image: "images/savon-charbon.jpg" },
+  { id: 9,  name: "Savon Rose & Miel",        category: "cosmetique",      gender: "mixte", icon: "🌸", price: 7.90,  desc: "Douceur et éclat, formule nourrissante. 100 g.",             image: "images/savon-rose-miel.jpg" },
+  { id: 10, name: "Dentifrice Charbon",       category: "cosmetique",      gender: "mixte", icon: "🦷", price: 8.90,  desc: "Blanchiment naturel au charbon actif. 75 ml.",                image: "images/dentifrice-charbon.jpg" },
+  { id: 11, name: "Dentifrice Menthe Forte",  category: "cosmetique",      gender: "mixte", icon: "🌿", price: 5.90,  desc: "Fraîcheur longue durée, formule fluorée. 75 ml.",             image: "images/dentifrice-menthe.jpg" },
+  { id: 12, name: "Dentifrice Argile Blanche",category: "cosmetique",      gender: "mixte", icon: "🏔️", price: 9.50,  desc: "Soin des gencives à l'argile pure. 60 ml.",                  image: "images/dentifrice-argile.jpg" },
+  { id: 13, name: "Déo Fleur de Coton",       category: "cosmetique",      gender: "mixte", icon: "🌼", price: 9.90,  desc: "Fraîcheur 48 h, sans sels d'aluminium. 150 ml.",              image: "images/deo-coton.jpg" },
+  { id: 14, name: "Déo Bois & Musc",          category: "cosmetique",      gender: "mixte", icon: "🌳", price: 10.50, desc: "Boisé et subtil, confort toute la journée. 150 ml.",           image: "images/deo-bois-musc.jpg" },
+  { id: 15, name: "Déo Aloe Vera",            category: "cosmetique",      gender: "mixte", icon: "🌱", price: 9.00,  desc: "Douceur de l'aloe vera, peau sensible. 150 ml.",               image: "images/deo-aloe.jpg" },
+  { id: 30, name: "Brosses",                  category: "cosmetique",      gender: "mixte", icon: "🪥", price: 5.00,  desc: "Brosses pour l’hygiène quotidienne et le soin personnel.",      image: "" },
+  { id: 31, name: "Siwak",                    category: "cosmetique",      gender: "mixte", icon: "🌿", price: 3.50,  desc: "Bâtons de siwak pour un nettoyage dentaire naturel.",          image: "" },
+  { id: 32, name: "Mouchoirs",                category: "cosmetique",      gender: "mixte", icon: "🧻", price: 2.50,  desc: "Mouchoirs pratiques pour le quotidien.",                        image: "" },
+  { id: 33, name: "Lait de corps",            category: "cosmetique",      gender: "mixte", icon: "🧴", price: 12.00, desc: "Lait hydratant pour nourrir et adoucir la peau.",               image: "" },
+  { id: 34, name: "Crème de soins",           category: "cosmetique",      gender: "mixte", icon: "🫙", price: 14.00, desc: "Crèmes de soins pour le visage et le corps.",                    image: "" },
+  { id: 35, name: "Huiles cosmétiques",       category: "cosmetique",      gender: "mixte", icon: "✨", price: 15.00, desc: "Huiles cosmétiques pour nourrir, sublimer et protéger.",        image: "" },
 
-  // Dentifrices
-  { id: 10, name: "Dentifrice Charbon",       category: "dentifrice", gender: "mixte", icon: "🦷", price: 8.90, desc: "Blanchiment naturel au charbon actif. 75 ml.",              image: "images/dentifrice-charbon.jpg" },
-  { id: 11, name: "Dentifrice Menthe Forte",  category: "dentifrice", gender: "mixte", icon: "🌿", price: 5.90, desc: "Fraîcheur longue durée, formule fluorée. 75 ml.",           image: "images/dentifrice-menthe.jpg" },
-  { id: 12, name: "Dentifrice Argile Blanche",category: "dentifrice", gender: "mixte", icon: "🏔️", price: 9.50, desc: "Soin des gencives à l'argile pure. 60 ml.",                image: "images/dentifrice-argile.jpg" },
+  // Parfums complémentaires
+  { id: 36, name: "Huiles parfumées Femme",   category: "parfum",          gender: "femme", icon: "🌺", price: 18.00, desc: "Collection d’huiles parfumées dédiée aux senteurs féminines.",     image: "" },
+  { id: 37, name: "Brumes Femme",             category: "parfum",          gender: "femme", icon: "🌸", price: 16.00, desc: "Brumes légères pour une fraîcheur féminine au quotidien.",         image: "" },
+  { id: 38, name: "Huiles parfumées Homme",   category: "parfum",          gender: "homme", icon: "🪔", price: 18.00, desc: "Huiles parfumées aux notes intenses pour homme.",                   image: "" },
+  { id: 39, name: "Brumes Homme",             category: "parfum",          gender: "homme", icon: "💨", price: 16.00, desc: "Brumes masculines pour une touche fraîche et raffinée.",           image: "" },
 
-  // Déodorants
-  { id: 13, name: "Déo Fleur de Coton",  category: "deodorant", gender: "mixte", icon: "🌼", price: 9.90,  desc: "Fraîcheur 48 h, sans sels d'aluminium. 150 ml.",                image: "images/deo-coton.jpg" },
-  { id: 14, name: "Déo Bois & Musc",     category: "deodorant", gender: "mixte", icon: "🌳", price: 10.50, desc: "Boisé et subtil, confort toute la journée. 150 ml.",             image: "images/deo-bois-musc.jpg" },
-  { id: 15, name: "Déo Aloe Vera",       category: "deodorant", gender: "mixte", icon: "🌱", price: 9.00,  desc: "Douceur de l'aloe vera, peau sensible. 150 ml.",                 image: "images/deo-aloe.jpg" },
+  // Santé & bien-être
+  { id: 40, name: "Santé & Bien-être",        category: "sante-bien-etre", gender: "mixte", icon: "🧘", price: 20.00, desc: "Sélection d’articles dédiés au bien-être et au confort quotidien.", image: "" },
+
+  // Divers
+  { id: 41, name: "Électronique",             category: "divers",          gender: "mixte", icon: "🔌", price: 25.00, desc: "Petits articles électroniques disponibles en boutique.",           image: "" },
+  { id: 42, name: "Thiouraye (Encens)",       category: "divers",          gender: "mixte", icon: "🔥", price: 10.00, desc: "Thiouraye et encens pour parfumer agréablement vos espaces.",     image: "" },
 ];
 
 // ===== Cart State =====
@@ -87,7 +102,12 @@ function renderProducts(filter = "all") {
 }
 
 function categoryLabel(cat) {
-  const map = { parfum: "Parfum", savon: "Savon", dentifrice: "Dentifrice", deodorant: "Déodorant" };
+  const map = {
+    parfum: "Parfums",
+    cosmetique: "Cosmétiques",
+    "sante-bien-etre": "Santé & Bien-être",
+    divers: "Divers",
+  };
   return map[cat] || cat;
 }
 
