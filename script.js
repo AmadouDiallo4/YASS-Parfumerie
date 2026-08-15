@@ -50,7 +50,7 @@ const products = [
   // Cosmétiques
   { id: 6,  name: "CREME_NIVEA",              category: "cosmetique", subCategory: "creme",                gender: "mixte", icon: "🫙", price: 2000, desc: "Crème Nivea.", image: "images/cosmetiques/CREME_NIVEA.jpeg" },
   { id: 7,  name: "CREME_SOIN_CIEN",          category: "cosmetique", subCategory: "creme",                gender: "mixte", icon: "🧴", price: 2000, desc: "Crème soin Cien.", image: "images/cosmetiques/CREME_SOIN_CIEN.jpeg" },
-  { id: 8,  name: "DENTALUX_FRAICHE",         category: "cosmetique", subCategory: "savon",                gender: "mixte", icon: "🧼", price: 1500, desc: "Dentalux fraîche.", image: "images/cosmetiques/DENTALUX_FRAICHE.jpeg" },
+  { id: 8,  name: "DENTALUX_FRAICHE",         category: "cosmetique", subCategory: "dentifrice",           gender: "mixte", icon: "🦷", price: 1500, desc: "Dentalux fraîche.", image: "images/cosmetiques/DENTALUX_FRAICHE.jpeg" },
   { id: 9,  name: "DEO_CIEN",                 category: "cosmetique", subCategory: "deodorant",            gender: "mixte", icon: "🌿", price: 2000, desc: "Déodorant Cien classique.", image: "images/cosmetiques/Deo_cien.jpeg" },
   { id: 10, name: "DEO_NARTA",                category: "cosmetique", subCategory: "deodorant",            gender: "mixte", icon: "🌿", price: 2500, desc: "Déodorant Narta.", image: "images/cosmetiques/Deo_Narta.jpeg" },
   { id: 11, name: "DEO_NARTA_PURE_EFFICACE",  category: "cosmetique", subCategory: "deodorant",            gender: "mixte", icon: "🌿", price: 2500, desc: "Déodorant Narta Pure Efficace.", image: "images/cosmetiques/Deo_Narta_Pure_efficace.jpeg" },
@@ -102,21 +102,22 @@ function renderProducts(filter = "all") {
   }
 
   filtered.forEach(product => {
+    const readableName = displayName(product.name);
     const card = document.createElement("article");
     card.className = "product-card";
     card.dataset.id = product.id;
     const imgHtml = product.image
-      ? `<img class="product-img-photo" src="${escHtml(product.image)}" alt="${escHtml(product.name)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><div class="product-img product-img-fallback" aria-hidden="true" style="display:none">${escHtml(product.icon)}</div>`
+      ? `<img class="product-img-photo" src="${escHtml(product.image)}" alt="${escHtml(readableName)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><div class="product-img product-img-fallback" aria-hidden="true" style="display:none">${escHtml(product.icon)}</div>`
       : `<div class="product-img" aria-hidden="true">${escHtml(product.icon)}</div>`;
     card.innerHTML = `
       <div class="product-img-wrapper">${imgHtml}</div>
       <div class="product-info">
         <span class="product-badge">${productCategoryLabel(product)}</span>
         ${product.gender !== "mixte" ? `<span class="product-gender gender-${escHtml(product.gender)}">${genderLabel(product.gender)}</span>` : ""}
-        <h3>${escHtml(product.name)}</h3>
+        <h3>${escHtml(readableName)}</h3>
         <p class="product-desc">${escHtml(product.desc)}</p>
         <p class="product-price">${formatPrice(product.price)}</p>
-        <button class="btn-add" data-id="${product.id}" aria-label="Ajouter ${escHtml(product.name)} au panier">
+        <button class="btn-add" data-id="${product.id}" aria-label="Ajouter ${escHtml(readableName)} au panier">
           + Ajouter au panier
         </button>
       </div>
@@ -149,6 +150,7 @@ function subCategoryLabel(subCategory) {
     narta: "Narta",
     narta_pure_efficace: "Narta Pure Efficace",
     shampoing_solide: "Shampoing solide",
+    dentifrice: "Dentifrice",
   };
   return map[subCategory] || subCategory;
 }
@@ -167,6 +169,10 @@ function formatPrice(n) {
   return n.toLocaleString("fr-FR") + " CFA";
 }
 
+function displayName(name) {
+  return name.replace(/_/g, " ");
+}
+
 function escHtml(str) {
   return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
@@ -178,20 +184,21 @@ function renderGenderGrid(gender, gridId) {
   grid.innerHTML = "";
   const filtered = products.filter(p => p.gender === gender);
   filtered.forEach(product => {
+    const readableName = displayName(product.name);
     const card = document.createElement("article");
     card.className = "product-card";
     card.dataset.id = product.id;
     const imgHtml = product.image
-      ? `<img class="product-img-photo" src="${escHtml(product.image)}" alt="${escHtml(product.name)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><div class="product-img product-img-fallback" aria-hidden="true" style="display:none">${escHtml(product.icon)}</div>`
+      ? `<img class="product-img-photo" src="${escHtml(product.image)}" alt="${escHtml(readableName)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><div class="product-img product-img-fallback" aria-hidden="true" style="display:none">${escHtml(product.icon)}</div>`
       : `<div class="product-img" aria-hidden="true">${escHtml(product.icon)}</div>`;
     card.innerHTML = `
       <div class="product-img-wrapper">${imgHtml}</div>
       <div class="product-info">
         <span class="product-badge">${productCategoryLabel(product)}</span>
-        <h3>${escHtml(product.name)}</h3>
+        <h3>${escHtml(readableName)}</h3>
         <p class="product-desc">${escHtml(product.desc)}</p>
         <p class="product-price">${formatPrice(product.price)}</p>
-        <button class="btn-add" data-id="${product.id}" aria-label="Ajouter ${escHtml(product.name)} au panier">
+        <button class="btn-add" data-id="${product.id}" aria-label="Ajouter ${escHtml(readableName)} au panier">
           + Ajouter au panier
         </button>
       </div>
@@ -222,7 +229,7 @@ function addToCart(productId) {
   }
 
   updateCartUI();
-  showToast(`"${product.name}" ajouté au panier 🛍️`);
+  showToast(`"${displayName(product.name)}" ajouté au panier 🛍️`);
 }
 
 function updateCartUI() {
@@ -250,7 +257,7 @@ function renderCartItems() {
     li.innerHTML = `
       <span class="cart-item-icon" aria-hidden="true">${item.icon}</span>
       <div>
-        <p class="cart-item-name">${escHtml(item.name)}</p>
+        <p class="cart-item-name">${escHtml(displayName(item.name))}</p>
         <p class="cart-item-qty">Qté : ${item.qty}</p>
       </div>
       <span class="cart-item-price">${formatPrice(item.price * item.qty)}</span>
