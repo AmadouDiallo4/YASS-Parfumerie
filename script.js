@@ -110,7 +110,7 @@ function renderProducts(filter = "all") {
     card.className = "product-card";
     card.dataset.id = product.id;
     const imgHtml = product.image
-      ? `<img class="product-img-photo" src="${escHtml(product.image)}" alt="${escHtml(readableName)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><div class="product-img product-img-fallback" aria-hidden="true" style="display:none">${escHtml(product.icon)}</div>`
+      ? `<img class="product-img-photo" src="${escHtml(product.image)}" alt="${escHtml(readableName)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><div class="product-img product-img-fallback" aria-hidden="true" style="display:none">${escHtml(product.icon)}</div>`
       : `<div class="product-img" aria-hidden="true">${escHtml(product.icon)}</div>`;
     card.innerHTML = `
       <div class="product-img-wrapper">${imgHtml}</div>
@@ -192,7 +192,7 @@ function renderGenderGrid(gender, gridId) {
     card.className = "product-card";
     card.dataset.id = product.id;
     const imgHtml = product.image
-      ? `<img class="product-img-photo" src="${escHtml(product.image)}" alt="${escHtml(readableName)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><div class="product-img product-img-fallback" aria-hidden="true" style="display:none">${escHtml(product.icon)}</div>`
+      ? `<img class="product-img-photo" src="${escHtml(product.image)}" alt="${escHtml(readableName)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><div class="product-img product-img-fallback" aria-hidden="true" style="display:none">${escHtml(product.icon)}</div>`
       : `<div class="product-img" aria-hidden="true">${escHtml(product.icon)}</div>`;
     card.innerHTML = `
       <div class="product-img-wrapper">${imgHtml}</div>
@@ -216,6 +216,18 @@ document.querySelectorAll(".tab").forEach(btn => {
     document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
     btn.classList.add("active");
     renderProducts(btn.dataset.filter);
+  });
+});
+
+// ===== Category Cards → activate filter =====
+document.querySelectorAll(".category-card[data-filter]").forEach(card => {
+  card.addEventListener("click", (e) => {
+    const filter = card.dataset.filter;
+    // Activate the matching tab
+    document.querySelectorAll(".tab").forEach(t => {
+      t.classList.toggle("active", t.dataset.filter === filter);
+    });
+    renderProducts(filter);
   });
 });
 
