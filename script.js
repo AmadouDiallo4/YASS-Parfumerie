@@ -86,7 +86,6 @@ const products = [
 
 // ===== Cart State =====
 let cart = [];
-const ORDERS_STORAGE_KEY = "yass-parfums-orders";
 
 // ===== DOM Helpers =====
 const $ = (id) => document.getElementById(id);
@@ -181,24 +180,6 @@ function formatOrderTime(date) {
   return date.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
 }
 
-function getStoredOrders() {
-  try {
-    const raw = localStorage.getItem(ORDERS_STORAGE_KEY);
-    if (!raw) return [];
-    const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return [];
-  }
-}
-
-function saveOrder(order) {
-  const orders = getStoredOrders();
-  orders.push(order);
-  localStorage.setItem(ORDERS_STORAGE_KEY, JSON.stringify(orders));
-  return orders;
-}
-
 function csvValue(value) {
   return `"${String(value ?? "").replace(/"/g, '""')}"`;
 }
@@ -207,7 +188,7 @@ function buildItemsSummary(items) {
   return items.map(item => `${displayName(item.name)} x${item.qty} (${formatPrice(item.unitPrice)} / unité)`).join(" | ");
 }
 
-function downloadOrdersCsvForDate(dateKey, orders) {
+function downloadOrderCsv(dateKey, order) {
   const headers = [
     "Date commande",
     "Heure commande",
@@ -221,7 +202,7 @@ function downloadOrdersCsvForDate(dateKey, orders) {
     "Total (CFA)",
   ];
 
-  const rows = orders.map(order => ([
+  const rows = [[
     order.orderDate,
     order.orderTime,
     order.nom,
@@ -232,13 +213,13 @@ function downloadOrdersCsvForDate(dateKey, orders) {
     order.paiement,
     buildItemsSummary(order.items),
     order.total,
-  ]));
+  ]];
 
   const csvContent = [headers, ...rows]
     .map(row => row.map(csvValue).join(","))
-    .join("\n");
+    .join("\r\n");
 
-  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  const blob = new Blob(["\uFEFF", csvContent], { type: "text/csv;charset=utf-8;" });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
@@ -246,7 +227,7 @@ function downloadOrdersCsvForDate(dateKey, orders) {
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
-  URL.revokeObjectURL(url);
+  setTimeout(() => URL.revokeObjectURL(url), 500);
 }
 
 function displayName(name) {
@@ -466,17 +447,21 @@ $("checkout-form").addEventListener("submit", (e) => {
     total,
   };
 
-  const allOrders = saveOrder(order);
-  const ordersForDate = allOrders.filter(saved => saved.orderDate === orderDate);
-  downloadOrdersCsvForDate(orderDate, ordersForDate);
+  try {
+    downloadOrderCsv(orderDate, order);
+  } catch {
+    msg.textContent = "Une erreur est survenue lors de la génération du fichier CSV.";
+    return;
+  }
 
   const subject = encodeURIComponent("Nouvelle commande YASS Parfums");
   const body = encodeURIComponent(
     `NOUVELLE COMMANDE (${orderDate} ${orderTime})\n\nClient :\nNom : ${nom}\nPrénom : ${prenom}\nAdresse/Ville : ${adresse}\nTéléphone : ${telephone}${email ? "\nEmail : " + email : ""}\n\nMoyen de paiement : ${paiement}\n\nProduits commandés :\n${itemLines}\n\nTotal : ${formatPrice(total)}`
   );
-  window.location.href = `mailto:ada9091@gmail.com?subject=${subject}&body=${body}`;
-
   msg.textContent = "Commande enregistrée. Le CSV du jour est téléchargé et votre client mail s'ouvre. ✅";
+  setTimeout(() => {
+    window.location.href = `mailto:ada9091@gmail.com?subject=${subject}&body=${body}`;
+  }, 150);
   cart = [];
   updateCartUI();
   form.reset();
