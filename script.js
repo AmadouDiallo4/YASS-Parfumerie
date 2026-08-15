@@ -3,20 +3,27 @@
 // ===== Product Data =====
 const products = [
   // Parfums Femmes
-  { id: 1,  name: "Rose Éternelle",      category: "parfum", gender: "femme",  icon: "🌹", price: 49.90, desc: "Eau de parfum florale, notes de rose et musc blanc. 50 ml.",       image: "images/femmes/rose-eternelle.jpg" },
-  { id: 4,  name: "Nuit de Jasmin",      category: "parfum", gender: "femme",  icon: "🌙", price: 55.00, desc: "Notes de jasmin, vanille et cèdre. 50 ml.",                        image: "images/femmes/nuit-de-jasmin.jpg" },
-  { id: 16, name: "Fleur d'Oranger",     category: "parfum", gender: "femme",  icon: "🌼", price: 45.00, desc: "Fraîcheur florale, fleur d'oranger et bergamote. 50 ml.",          image: "images/femmes/fleur-oranger.jpg" },
-  { id: 17, name: "Velours Rose",        category: "parfum", gender: "femme",  icon: "🌸", price: 52.90, desc: "Bouquet de roses et notes poudrées, féminité absolue. 50 ml.",     image: "images/femmes/velours-rose.jpg" },
-  { id: 18, name: "Douce Vanille",       category: "parfum", gender: "femme",  icon: "🍦", price: 48.00, desc: "Gourmand et envoûtant, vanille crémeuse et musc doux. 50 ml.",     image: "images/femmes/douce-vanille.jpg" },
-  { id: 19, name: "Pétale de Soie",      category: "parfum", gender: "femme",  icon: "🎀", price: 59.90, desc: "Soie florale, pivoine et bois de cèdre blanc. 75 ml.",             image: "images/femmes/petale-soie.jpg" },
+  { id: 1,  name: "AFTER HOURS",       category: "parfum", gender: "femme", icon: "🌙", price: 30000, desc: "Parfum femme envoûtant, idéal pour les soirées.",          image: "images/femmes/AFTER_HOURS.jpeg" },
+  { id: 4,  name: "NANUKA",            category: "parfum", gender: "femme", icon: "🌸", price: 30000, desc: "Fragrance florale et douce, féminité naturelle.",           image: "images/femmes/NANUKA.jpeg" },
+  { id: 16, name: "BELLAYA",           category: "parfum", gender: "femme", icon: "🌺", price: 30000, desc: "Élégance et douceur, bouquet de fleurs précieuses.",        image: "images/femmes/BELLAYA.jpeg" },
+  { id: 17, name: "DRAGUEE BLANC",     category: "parfum", gender: "femme", icon: "🤍", price: 30000, desc: "Notes poudrées et sucrées, légèreté absolue.",              image: "images/femmes/DRAGUEE_BLANC.jpeg" },
+  { id: 18, name: "FELICIA",           category: "parfum", gender: "femme", icon: "💐", price: 20000, desc: "Fraîcheur florale, pétales de rose et musc délicat.",       image: "images/femmes/FELICIA.jpeg" },
+  { id: 19, name: "GOLDEN SMOOTHIE",   category: "parfum", gender: "femme", icon: "✨", price: 30000, desc: "Gourmand et lumineux, notes dorées et vanillées.",           image: "images/femmes/GOLDEN_SMOOTHIE.jpeg" },
+  { id: 23, name: "MUSC BLANC",        category: "parfum", gender: "femme", icon: "🕊️", price: 20000, desc: "Musc blanc pur, douceur et sensualité raffinée.",           image: "images/femmes/MUSC_BLANC.jpeg" },
+  { id: 24, name: "MUSC BLANC 1",      category: "parfum", gender: "femme", icon: "☁️", price: 20000, desc: "Variante du musc blanc, légèreté et fraîcheur.",            image: "images/femmes/MUSC_BLANC1.jpeg" },
+  { id: 25, name: "VENUM",             category: "parfum", gender: "femme", icon: "💜", price: 20000, desc: "Intense et mystérieux, sillage envoûtant et durable.",       image: "images/femmes/VENUM.jpeg" },
 
   // Parfums Hommes
-  { id: 2,  name: "Oud Prestige",        category: "parfum", gender: "homme",  icon: "🏺", price: 69.90, desc: "Parfum oriental intense, oud et bois de santal. 50 ml.",           image: "images/hommes/oud-prestige.jpg" },
-  { id: 3,  name: "Fraîcheur Aqua",      category: "parfum", gender: "homme",  icon: "💧", price: 39.90, desc: "Eau de cologne légère, agrumes et menthe. 100 ml.",                image: "images/hommes/fraicheur-aqua.jpg" },
-  { id: 5,  name: "Velvet Wood",         category: "parfum", gender: "homme",  icon: "🌲", price: 59.90, desc: "Boisé et chaleureux, idéal pour l'automne. 50 ml.",                image: "images/hommes/velvet-wood.jpg" },
-  { id: 20, name: "Black Intense",       category: "parfum", gender: "homme",  icon: "🖤", price: 64.90, desc: "Cuir, poivre noir et ambre, élégance masculine. 50 ml.",           image: "images/hommes/black-intense.jpg" },
-  { id: 21, name: "Brise Marine",        category: "parfum", gender: "homme",  icon: "⛵", price: 44.90, desc: "Aquatique et frais, sel marin et vétiver. 100 ml.",                image: "images/hommes/brise-marine.jpg" },
-  { id: 22, name: "Cèdre & Tabac",       category: "parfum", gender: "homme",  icon: "🥃", price: 72.00, desc: "Notes de cèdre, tabac blond et fève tonka. 50 ml.",                image: "images/hommes/cedre-tabac.jpg" },
+  { id: 2,  name: "AFRICAN LEGEND",    category: "parfum", gender: "homme", icon: "🏺", price: 30000, desc: "Fragrance boisée et épicée, puissance et caractère.",       image: "images/hommes/AFRICAN_LEGEND.jpeg" },
+  { id: 3,  name: "ALBI",              category: "parfum", gender: "homme", icon: "🌲", price: 30000, desc: "Boisé et frais, élégance masculine affirmée.",               image: "images/hommes/ALBI.jpeg" },
+  { id: 5,  name: "BIANCO",            category: "parfum", gender: "homme", icon: "🤍", price: 20000, desc: "Fraîcheur aquatique et notes blanches, modernité.",          image: "images/hommes/BIANCO.jpeg" },
+  { id: 20, name: "BOIIS INTENSE 2004",category: "parfum", gender: "homme", icon: "🪵", price: 20000, desc: "Oud intense et bois sombre, signature envoûtante.",          image: "images/hommes/BOIIS_INTENSE_2004.jpeg" },
+  { id: 21, name: "CREAMY LOVE",       category: "parfum", gender: "homme", icon: "🧡", price: 30000, desc: "Doux et crémeux, alliance boisée et gourmande.",             image: "images/hommes/CREAMY_LOVE.jpeg" },
+  { id: 22, name: "FLOWER BOUQUET",    category: "parfum", gender: "homme", icon: "💐", price: 20000, desc: "Bouquet floral masculin, fraîcheur et légèreté.",            image: "images/hommes/FLOWER_BOUQUET.jpeg" },
+  { id: 26, name: "GHOST OUD",         category: "parfum", gender: "homme", icon: "👻", price: 30000, desc: "Oud mystérieux et fumé, présence imposante.",                image: "images/hommes/GHOST_OUD.jpeg" },
+  { id: 27, name: "KRYPTON",           category: "parfum", gender: "homme", icon: "⚡", price: 20000, desc: "Explosif et électrisant, énergie et dynamisme.",             image: "images/hommes/KRYPTON.jpeg" },
+  { id: 28, name: "SKIN OF OUD",       category: "parfum", gender: "homme", icon: "🥇", price: 20000, desc: "Oud sur peau, chaleur et intimité naturelle.",               image: "images/hommes/SKIN_OF_OUD.jpeg" },
+  { id: 29, name: "VERTIGO",           category: "parfum", gender: "homme", icon: "🌀", price: 30000, desc: "Tourbillon de sensations, profondeur et intensité.",         image: "images/hommes/VERTIGO.jpeg" },
 
   // Savons
   { id: 6,  name: "Savon Lavande",       category: "savon",  gender: "mixte",  icon: "💜", price: 6.90,  desc: "Savon artisanal à la lavande et huile d'argan. 100 g.",            image: "images/savon-lavande.jpg" },
@@ -90,7 +97,7 @@ function genderLabel(gender) {
 }
 
 function formatPrice(n) {
-  return n.toFixed(2).replace(".", ",") + " €";
+  return n.toLocaleString("fr-FR") + " CFA";
 }
 
 function escHtml(str) {
