@@ -377,13 +377,22 @@ $("btn-checkout").addEventListener("click", () => {
 });
 
 // ===== Checkout Modal =====
-function openCheckout() {
+const DELIVERY_FEE = 2000;
+
+function buildCheckoutSummary(paiement) {
   const lines = cart.map(item =>
     `• ${escHtml(displayName(item.name))} — Qté : ${item.qty} — Prix : ${formatPrice(item.price * item.qty)}`
   ).join("\n");
-  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+  const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+  const isDelivery = paiement === "Paiement à la livraison";
+  const total = subtotal + (isDelivery ? DELIVERY_FEE : 0);
+  const deliveryLine = isDelivery ? `\nFrais de livraison : ${formatPrice(DELIVERY_FEE)}` : "";
+  return `Résumé de votre commande\n\n${lines}${deliveryLine}\n\nTotal : ${formatPrice(total)}`;
+}
 
-  $("checkout-summary").textContent = `Résumé de votre commande\n\n${lines}\n\nTotal : ${formatPrice(total)}`;
+function openCheckout() {
+  const paiementSelect = $("checkout-form").querySelector('[name="checkout-paiement"]');
+  $("checkout-summary").textContent = buildCheckoutSummary(paiementSelect.value);
   $("checkout-modal").classList.add("open");
   $("checkout-overlay").classList.add("active");
   document.body.style.overflow = "hidden";
@@ -397,6 +406,10 @@ function closeCheckout() {
 
 $("btn-close-checkout").addEventListener("click", closeCheckout);
 $("checkout-overlay").addEventListener("click", closeCheckout);
+
+$("checkout-form").querySelector('[name="checkout-paiement"]').addEventListener("change", (e) => {
+  $("checkout-summary").textContent = buildCheckoutSummary(e.target.value);
+});
 
 $("checkout-form").addEventListener("submit", (e) => {
   e.preventDefault();
@@ -423,7 +436,7 @@ $("checkout-form").addEventListener("submit", (e) => {
   const now = new Date();
   const orderDate = formatOrderDate(now);
   const orderTime = formatOrderTime(now);
-  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0) + (paiement === "Paiement à la livraison" ? DELIVERY_FEE : 0);
   const orderItems = cart.map(item => ({
     name: item.name,
     qty: item.qty,
@@ -454,9 +467,10 @@ $("checkout-form").addEventListener("submit", (e) => {
     return;
   }
 
+  const deliveryFeeLine = paiement === "Paiement à la livraison" ? `\nFrais de livraison : ${formatPrice(DELIVERY_FEE)}` : "";
   const subject = encodeURIComponent("Nouvelle commande YASS Parfums");
   const body = encodeURIComponent(
-    `NOUVELLE COMMANDE (${orderDate} ${orderTime})\n\nClient :\nNom : ${nom}\nPrénom : ${prenom}\nAdresse/Ville : ${adresse}\nTéléphone : ${telephone}${email ? "\nEmail : " + email : ""}\n\nMoyen de paiement : ${paiement}\n\nProduits commandés :\n${itemLines}\n\nTotal : ${formatPrice(total)}`
+    `NOUVELLE COMMANDE (${orderDate} ${orderTime})\n\nClient :\nNom : ${nom}\nPrénom : ${prenom}\nAdresse/Ville : ${adresse}\nTéléphone : ${telephone}${email ? "\nEmail : " + email : ""}\n\nMoyen de paiement : ${paiement}\n\nProduits commandés :\n${itemLines}${deliveryFeeLine}\n\nTotal : ${formatPrice(total)}`
   );
   msg.textContent = "Commande enregistrée. Le CSV du jour est téléchargé et votre client mail s'ouvre. ✅";
   setTimeout(() => {
