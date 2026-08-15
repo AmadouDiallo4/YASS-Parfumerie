@@ -74,11 +74,14 @@ const products = [
   { id: 59, name: "HUILE_NIGELE_TABARAK",     category: "cosmetique", subCategory: "huile",                gender: "mixte", icon: "✨", price: 2000, desc: "Huile nigelle Tabarak.", image: "images/cosmetiques/HUILE_NIGEL_TABARAK.jpeg" },
 
   // Santé & bien-être
-  { id: 60, name: "Santé & Bien-être",        category: "sante-bien-etre", gender: "mixte", icon: "🧘", price: 20000, desc: "Sélection d’articles dédiés au bien-être et au confort quotidien.", image: "" },
+  { id: 60, name: "SLIM_TEA_HEMANI",          category: "sante-bien-etre", gender: "mixte", icon: "🍵", price: 3500,  desc: "Thé minceur Hemani, favorise le bien-être et la silhouette.", image: "images/sante_bien_etre/SLIM_TEA_HEMANI.jpeg" },
+  { id: 63, name: "SUROP_FENUGREC",           category: "sante-bien-etre", gender: "mixte", icon: "🌿", price: 3000,  desc: "Sirop de fenugrec, tonifiant et naturel.", image: "images/sante_bien_etre/surop_fenugrec.jpeg" },
+  { id: 64, name: "THIOURAYE 1",              category: "sante-bien-etre", gender: "mixte", icon: "🔥", price: 7000,  desc: "Thiouraye (encens) pour parfumer agréablement vos espaces.", image: "images/sante_bien_etre/THIOURAYE1.jpeg" },
+  { id: 65, name: "THIOURAYE 2",              category: "sante-bien-etre", gender: "mixte", icon: "🔥", price: 7000,  desc: "Thiouraye (encens) pour parfumer agréablement vos espaces.", image: "images/sante_bien_etre/THIOURAYE2.jpeg" },
+  { id: 66, name: "THIOURAYE 3",              category: "sante-bien-etre", gender: "mixte", icon: "🔥", price: 7000,  desc: "Thiouraye (encens) pour parfumer agréablement vos espaces.", image: "images/sante_bien_etre/THIOURAYE3.jpeg" },
 
   // Divers
   { id: 61, name: "Électronique",             category: "divers",          gender: "mixte", icon: "🔌", price: 25000, desc: "Petits articles électroniques disponibles en boutique.", image: "" },
-  { id: 62, name: "Thiouraye (Encens)",       category: "divers",          gender: "mixte", icon: "🔥", price: 10000, desc: "Thiouraye et encens pour parfumer agréablement vos espaces.", image: "" },
 ];
 
 // ===== Cart State =====
@@ -288,8 +291,7 @@ $("btn-checkout").addEventListener("click", () => {
     showToast("Votre panier est vide !");
     return;
   }
-  // Placeholder checkout action
-  alert("Merci pour votre commande ! La fonctionnalité de paiement sera bientôt disponible.");
+  openCheckout();
 });
 
 // ===== Delegate Add-to-Cart Clicks =====
@@ -304,7 +306,65 @@ $("btn-checkout").addEventListener("click", () => {
   }
 });
 
-// ===== Toast =====
+// ===== Checkout Modal =====
+function openCheckout() {
+  const lines = cart.map(item =>
+    `• ${escHtml(displayName(item.name))} x${item.qty} — ${formatPrice(item.price * item.qty)}`
+  ).join("\n");
+  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+
+  $("checkout-summary").textContent = lines + `\n\nTotal : ${formatPrice(total)}`;
+  $("checkout-modal").classList.add("open");
+  $("checkout-overlay").classList.add("active");
+  document.body.style.overflow = "hidden";
+}
+
+function closeCheckout() {
+  $("checkout-modal").classList.remove("open");
+  $("checkout-overlay").classList.remove("active");
+  document.body.style.overflow = "";
+}
+
+$("btn-close-checkout").addEventListener("click", closeCheckout);
+$("checkout-overlay").addEventListener("click", closeCheckout);
+
+$("checkout-form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const msg = $("checkout-msg");
+
+  const nom       = form.querySelector('[name="checkout-nom"]').value.trim();
+  const prenom    = form.querySelector('[name="checkout-prenom"]').value.trim();
+  const adresse   = form.querySelector('[name="checkout-adresse"]').value.trim();
+  const telephone = form.querySelector('[name="checkout-telephone"]').value.trim();
+  const email     = form.querySelector('[name="checkout-email"]').value.trim();
+  const paiement  = form.querySelector('[name="checkout-paiement"]').value;
+
+  if (!nom || !prenom || !adresse || !telephone || !paiement) {
+    msg.textContent = "Veuillez remplir tous les champs obligatoires (*).";
+    return;
+  }
+
+  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+  const itemLines = cart.map(item =>
+    `  - ${displayName(item.name)} x${item.qty} : ${formatPrice(item.price * item.qty)}`
+  ).join("\n");
+
+  const subject = encodeURIComponent("Nouvelle commande YASS Parfums");
+  const body = encodeURIComponent(
+    `NOUVELLE COMMANDE\n\nClient :\nNom : ${nom}\nPrénom : ${prenom}\nAdresse/Ville : ${adresse}\nTéléphone : ${telephone}${email ? "\nEmail : " + email : ""}\n\nMoyen de paiement : ${paiement}\n\nProduits commandés :\n${itemLines}\n\nTotal : ${formatPrice(total)}`
+  );
+  window.location.href = `mailto:ada9091@gmail.com?subject=${subject}&body=${body}`;
+
+  msg.textContent = "Votre client mail s'ouvre pour confirmer la commande. ✅";
+  cart = [];
+  updateCartUI();
+  form.reset();
+  setTimeout(closeCheckout, 2500);
+});
+
+
+
 let toastTimer;
 function showToast(msg) {
   const toast = $("toast");
@@ -341,7 +401,13 @@ $("contact-form").addEventListener("submit", (e) => {
     return;
   }
 
-  msg.textContent = "Message envoyé ! Nous vous répondrons très bientôt. ✅";
+  const subject = encodeURIComponent("Message depuis YASS Parfums");
+  const body = encodeURIComponent(
+    `Nom : ${form.nom.value.trim()}\nEmail : ${form.email.value.trim()}\n\nMessage :\n${form.message.value.trim()}`
+  );
+  window.location.href = `mailto:ada9091@gmail.com?subject=${subject}&body=${body}`;
+
+  msg.textContent = "Votre client mail s'ouvre pour envoyer le message. ✅";
   form.reset();
 });
 

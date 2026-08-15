@@ -72,7 +72,7 @@
         <a href="#produits" class="category-card">
           <div class="category-icon">🛍️</div>
           <h3>Divers</h3>
-          <p>Électronique, thiouraye et autres articles à découvrir</p>
+          <p>Électronique et autres articles à découvrir</p>
         </a>
       </div>
     </div>
@@ -169,6 +169,48 @@
       </nav>
     </div>
   </footer>
+
+  <!-- ===== CHECKOUT MODAL ===== -->
+  <div class="checkout-modal" id="checkout-modal" role="dialog" aria-modal="true" aria-labelledby="checkout-title">
+    <div class="checkout-header">
+      <h2 id="checkout-title">Finaliser ma commande</h2>
+      <button class="btn-close-checkout" id="btn-close-checkout" aria-label="Fermer">&times;</button>
+    </div>
+    <div class="checkout-body">
+      <pre class="checkout-summary" id="checkout-summary"></pre>
+      <form class="checkout-form" id="checkout-form" novalidate>
+        <div class="checkout-fields">
+          <label>Nom <span class="required">*</span>
+            <input type="text" name="checkout-nom" placeholder="Votre nom" required />
+          </label>
+          <label>Prénom <span class="required">*</span>
+            <input type="text" name="checkout-prenom" placeholder="Votre prénom" required />
+          </label>
+          <label>Adresse / Ville <span class="required">*</span>
+            <input type="text" name="checkout-adresse" placeholder="Votre adresse et ville" required />
+          </label>
+          <label>Téléphone <span class="required">*</span>
+            <input type="tel" name="checkout-telephone" placeholder="Ex : +221 77 000 00 00" required />
+          </label>
+          <label>Email <span class="optional">(optionnel)</span>
+            <input type="email" name="checkout-email" placeholder="Votre email" />
+          </label>
+          <label>Moyen de paiement <span class="required">*</span>
+            <select name="checkout-paiement" required>
+              <option value="">— Choisir —</option>
+              <option value="Orange Money">Orange Money</option>
+              <option value="Wave">Wave</option>
+              <option value="Paiement à la livraison">Paiement à la livraison (frais de livraison à convenir avec le gérant)</option>
+            </select>
+          </label>
+        </div>
+        <p class="checkout-note">* Champs obligatoires</p>
+        <button type="submit" class="btn btn-primary btn-full">Confirmer la commande</button>
+        <p class="form-msg" id="checkout-msg" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+  <div class="checkout-overlay" id="checkout-overlay"></div>
 
   <!-- ===== CART SIDEBAR ===== -->
   <aside class="cart-sidebar" id="cart-sidebar" aria-label="Panier">
