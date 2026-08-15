@@ -384,10 +384,8 @@ function buildCheckoutSummary(paiement) {
     `• ${escHtml(displayName(item.name))} — Qté : ${item.qty} — Prix : ${formatPrice(item.price * item.qty)}`
   ).join("\n");
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-  const isDelivery = paiement === "Paiement à la livraison";
-  const total = subtotal + (isDelivery ? DELIVERY_FEE : 0);
-  const deliveryLine = isDelivery ? `\nFrais de livraison : ${formatPrice(DELIVERY_FEE)}` : "";
-  return `Résumé de votre commande\n\n${lines}${deliveryLine}\n\nTotal : ${formatPrice(total)}`;
+  const total = subtotal + DELIVERY_FEE;
+  return `Résumé de votre commande\n\n${lines}\nFrais de livraison : ${formatPrice(DELIVERY_FEE)}\n\nTotal : ${formatPrice(total)}`;
 }
 
 function openCheckout() {
@@ -437,7 +435,7 @@ $("checkout-form").addEventListener("submit", (e) => {
   const now = new Date();
   const orderDate = formatOrderDate(now);
   const orderTime = formatOrderTime(now);
-  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0) + (paiement === "Paiement à la livraison" ? DELIVERY_FEE : 0);
+  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0) + DELIVERY_FEE;
   const orderItems = cart.map(item => ({
     name: item.name,
     qty: item.qty,
@@ -468,7 +466,7 @@ $("checkout-form").addEventListener("submit", (e) => {
     return;
   }
 
-  const deliveryFeeLine = paiement === "Paiement à la livraison" ? `\nFrais de livraison : ${formatPrice(DELIVERY_FEE)}` : "";
+  const deliveryFeeLine = `\nFrais de livraison : ${formatPrice(DELIVERY_FEE)}`;
   const subject = encodeURIComponent("Nouvelle commande YASS Parfums");
   const body = encodeURIComponent(
     `NOUVELLE COMMANDE (${orderDate} ${orderTime})\n\nClient :\nNom : ${nom}\nPrénom : ${prenom}\nAdresse/Ville : ${adresse}\nTéléphone : ${telephone}${email ? "\nEmail : " + email : ""}\n\nMoyen de paiement : ${paiement}\n\nProduits commandés :\n${itemLines}${deliveryFeeLine}\n\nTotal : ${formatPrice(total)}`
