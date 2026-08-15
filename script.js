@@ -2,28 +2,37 @@
 
 // ===== Product Data =====
 const products = [
-  // Parfums
-  { id: 1, name: "Rose Éternelle", category: "parfum", icon: "🌹", price: 49.90, desc: "Eau de parfum florale, notes de rose et musc blanc. 50 ml." },
-  { id: 2, name: "Oud Prestige", category: "parfum", icon: "🏺", price: 69.90, desc: "Parfum oriental intense, oud et bois de santal. 50 ml." },
-  { id: 3, name: "Fraîcheur Aqua", category: "parfum", icon: "💧", price: 39.90, desc: "Eau de cologne légère, agrumes et menthe. 100 ml." },
-  { id: 4, name: "Nuit de Jasmin", category: "parfum", icon: "🌙", price: 55.00, desc: "Notes de jasmin, vanille et cèdre. 50 ml." },
-  { id: 5, name: "Velvet Wood", category: "parfum", icon: "🌲", price: 59.90, desc: "Boisé et chaleureux, idéal pour l'automne. 50 ml." },
+  // Parfums Femmes
+  { id: 1,  name: "Rose Éternelle",      category: "parfum", gender: "femme",  icon: "🌹", price: 49.90, desc: "Eau de parfum florale, notes de rose et musc blanc. 50 ml.",       image: "images/femmes/rose-eternelle.jpg" },
+  { id: 4,  name: "Nuit de Jasmin",      category: "parfum", gender: "femme",  icon: "🌙", price: 55.00, desc: "Notes de jasmin, vanille et cèdre. 50 ml.",                        image: "images/femmes/nuit-de-jasmin.jpg" },
+  { id: 16, name: "Fleur d'Oranger",     category: "parfum", gender: "femme",  icon: "🌼", price: 45.00, desc: "Fraîcheur florale, fleur d'oranger et bergamote. 50 ml.",          image: "images/femmes/fleur-oranger.jpg" },
+  { id: 17, name: "Velours Rose",        category: "parfum", gender: "femme",  icon: "🌸", price: 52.90, desc: "Bouquet de roses et notes poudrées, féminité absolue. 50 ml.",     image: "images/femmes/velours-rose.jpg" },
+  { id: 18, name: "Douce Vanille",       category: "parfum", gender: "femme",  icon: "🍦", price: 48.00, desc: "Gourmand et envoûtant, vanille crémeuse et musc doux. 50 ml.",     image: "images/femmes/douce-vanille.jpg" },
+  { id: 19, name: "Pétale de Soie",      category: "parfum", gender: "femme",  icon: "🎀", price: 59.90, desc: "Soie florale, pivoine et bois de cèdre blanc. 75 ml.",             image: "images/femmes/petale-soie.jpg" },
+
+  // Parfums Hommes
+  { id: 2,  name: "Oud Prestige",        category: "parfum", gender: "homme",  icon: "🏺", price: 69.90, desc: "Parfum oriental intense, oud et bois de santal. 50 ml.",           image: "images/hommes/oud-prestige.jpg" },
+  { id: 3,  name: "Fraîcheur Aqua",      category: "parfum", gender: "homme",  icon: "💧", price: 39.90, desc: "Eau de cologne légère, agrumes et menthe. 100 ml.",                image: "images/hommes/fraicheur-aqua.jpg" },
+  { id: 5,  name: "Velvet Wood",         category: "parfum", gender: "homme",  icon: "🌲", price: 59.90, desc: "Boisé et chaleureux, idéal pour l'automne. 50 ml.",                image: "images/hommes/velvet-wood.jpg" },
+  { id: 20, name: "Black Intense",       category: "parfum", gender: "homme",  icon: "🖤", price: 64.90, desc: "Cuir, poivre noir et ambre, élégance masculine. 50 ml.",           image: "images/hommes/black-intense.jpg" },
+  { id: 21, name: "Brise Marine",        category: "parfum", gender: "homme",  icon: "⛵", price: 44.90, desc: "Aquatique et frais, sel marin et vétiver. 100 ml.",                image: "images/hommes/brise-marine.jpg" },
+  { id: 22, name: "Cèdre & Tabac",       category: "parfum", gender: "homme",  icon: "🥃", price: 72.00, desc: "Notes de cèdre, tabac blond et fève tonka. 50 ml.",                image: "images/hommes/cedre-tabac.jpg" },
 
   // Savons
-  { id: 6, name: "Savon Lavande", category: "savon", icon: "💜", price: 6.90, desc: "Savon artisanal à la lavande et huile d'argan. 100 g." },
-  { id: 7, name: "Savon Karité", category: "savon", icon: "🧼", price: 7.50, desc: "Beurre de karité pur, hydratation intense. 100 g." },
-  { id: 8, name: "Savon Charbon Actif", category: "savon", icon: "⚫", price: 8.20, desc: "Purifiant et détoxifiant, peau nette. 100 g." },
-  { id: 9, name: "Savon Rose & Miel", category: "savon", icon: "🌸", price: 7.90, desc: "Douceur et éclat, formule nourrissante. 100 g." },
+  { id: 6,  name: "Savon Lavande",       category: "savon",  gender: "mixte",  icon: "💜", price: 6.90,  desc: "Savon artisanal à la lavande et huile d'argan. 100 g.",            image: "images/savon-lavande.jpg" },
+  { id: 7,  name: "Savon Karité",        category: "savon",  gender: "mixte",  icon: "🧼", price: 7.50,  desc: "Beurre de karité pur, hydratation intense. 100 g.",                image: "images/savon-karite.jpg" },
+  { id: 8,  name: "Savon Charbon Actif", category: "savon",  gender: "mixte",  icon: "⚫", price: 8.20,  desc: "Purifiant et détoxifiant, peau nette. 100 g.",                     image: "images/savon-charbon.jpg" },
+  { id: 9,  name: "Savon Rose & Miel",   category: "savon",  gender: "mixte",  icon: "🌸", price: 7.90,  desc: "Douceur et éclat, formule nourrissante. 100 g.",                   image: "images/savon-rose-miel.jpg" },
 
   // Dentifrices
-  { id: 10, name: "Dentifrice Charbon", category: "dentifrice", icon: "🦷", price: 8.90, desc: "Blanchiment naturel au charbon actif. 75 ml." },
-  { id: 11, name: "Dentifrice Menthe Forte", category: "dentifrice", icon: "🌿", price: 5.90, desc: "Fraîcheur longue durée, formule fluorée. 75 ml." },
-  { id: 12, name: "Dentifrice Argile Blanche", category: "dentifrice", icon: "🏔️", price: 9.50, desc: "Soin des gencives à l'argile pure. 60 ml." },
+  { id: 10, name: "Dentifrice Charbon",       category: "dentifrice", gender: "mixte", icon: "🦷", price: 8.90, desc: "Blanchiment naturel au charbon actif. 75 ml.",              image: "images/dentifrice-charbon.jpg" },
+  { id: 11, name: "Dentifrice Menthe Forte",  category: "dentifrice", gender: "mixte", icon: "🌿", price: 5.90, desc: "Fraîcheur longue durée, formule fluorée. 75 ml.",           image: "images/dentifrice-menthe.jpg" },
+  { id: 12, name: "Dentifrice Argile Blanche",category: "dentifrice", gender: "mixte", icon: "🏔️", price: 9.50, desc: "Soin des gencives à l'argile pure. 60 ml.",                image: "images/dentifrice-argile.jpg" },
 
   // Déodorants
-  { id: 13, name: "Déo Fleur de Coton", category: "deodorant", icon: "🌼", price: 9.90, desc: "Fraîcheur 48 h, sans sels d'aluminium. 150 ml." },
-  { id: 14, name: "Déo Bois & Musc", category: "deodorant", icon: "🌳", price: 10.50, desc: "Boisé et subtil, confort toute la journée. 150 ml." },
-  { id: 15, name: "Déo Aloe Vera", category: "deodorant", icon: "🌱", price: 9.00, desc: "Douceur de l'aloe vera, peau sensible. 150 ml." },
+  { id: 13, name: "Déo Fleur de Coton",  category: "deodorant", gender: "mixte", icon: "🌼", price: 9.90,  desc: "Fraîcheur 48 h, sans sels d'aluminium. 150 ml.",                image: "images/deo-coton.jpg" },
+  { id: 14, name: "Déo Bois & Musc",     category: "deodorant", gender: "mixte", icon: "🌳", price: 10.50, desc: "Boisé et subtil, confort toute la journée. 150 ml.",             image: "images/deo-bois-musc.jpg" },
+  { id: 15, name: "Déo Aloe Vera",       category: "deodorant", gender: "mixte", icon: "🌱", price: 9.00,  desc: "Douceur de l'aloe vera, peau sensible. 150 ml.",                 image: "images/deo-aloe.jpg" },
 ];
 
 // ===== Cart State =====
@@ -37,16 +46,27 @@ function renderProducts(filter = "all") {
   const grid = $("products-grid");
   grid.innerHTML = "";
 
-  const filtered = filter === "all" ? products : products.filter(p => p.category === filter);
+  let filtered;
+  if (filter === "all") {
+    filtered = products;
+  } else if (filter === "femme" || filter === "homme") {
+    filtered = products.filter(p => p.gender === filter);
+  } else {
+    filtered = products.filter(p => p.category === filter);
+  }
 
   filtered.forEach(product => {
     const card = document.createElement("article");
     card.className = "product-card";
     card.dataset.id = product.id;
+    const imgHtml = product.image
+      ? `<img class="product-img-photo" src="${escHtml(product.image)}" alt="${escHtml(product.name)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><div class="product-img product-img-fallback" aria-hidden="true" style="display:none">${product.icon}</div>`
+      : `<div class="product-img" aria-hidden="true">${product.icon}</div>`;
     card.innerHTML = `
-      <div class="product-img" aria-hidden="true">${product.icon}</div>
+      <div class="product-img-wrapper">${imgHtml}</div>
       <div class="product-info">
         <span class="product-badge">${categoryLabel(product.category)}</span>
+        ${product.gender !== "mixte" ? `<span class="product-gender gender-${escHtml(product.gender)}">${genderLabel(product.gender)}</span>` : ""}
         <h3>${escHtml(product.name)}</h3>
         <p class="product-desc">${escHtml(product.desc)}</p>
         <p class="product-price">${formatPrice(product.price)}</p>
@@ -64,12 +84,46 @@ function categoryLabel(cat) {
   return map[cat] || cat;
 }
 
+function genderLabel(gender) {
+  const map = { femme: "Femme", homme: "Homme" };
+  return map[gender] || gender;
+}
+
 function formatPrice(n) {
   return n.toFixed(2).replace(".", ",") + " €";
 }
 
 function escHtml(str) {
   return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
+// ===== Render Gender-specific Grid =====
+function renderGenderGrid(gender, gridId) {
+  const grid = document.getElementById(gridId);
+  if (!grid) return;
+  grid.innerHTML = "";
+  const filtered = products.filter(p => p.gender === gender);
+  filtered.forEach(product => {
+    const card = document.createElement("article");
+    card.className = "product-card";
+    card.dataset.id = product.id;
+    const imgHtml = product.image
+      ? `<img class="product-img-photo" src="${escHtml(product.image)}" alt="${escHtml(product.name)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><div class="product-img product-img-fallback" aria-hidden="true" style="display:none">${product.icon}</div>`
+      : `<div class="product-img" aria-hidden="true">${product.icon}</div>`;
+    card.innerHTML = `
+      <div class="product-img-wrapper">${imgHtml}</div>
+      <div class="product-info">
+        <span class="product-badge">${categoryLabel(product.category)}</span>
+        <h3>${escHtml(product.name)}</h3>
+        <p class="product-desc">${escHtml(product.desc)}</p>
+        <p class="product-price">${formatPrice(product.price)}</p>
+        <button class="btn-add" data-id="${product.id}" aria-label="Ajouter ${escHtml(product.name)} au panier">
+          + Ajouter au panier
+        </button>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
 }
 
 // ===== Filter Tabs =====
@@ -158,10 +212,15 @@ $("btn-checkout").addEventListener("click", () => {
 });
 
 // ===== Delegate Add-to-Cart Clicks =====
-$("products-grid").addEventListener("click", (e) => {
-  const btn = e.target.closest(".btn-add");
-  if (!btn) return;
-  addToCart(Number(btn.dataset.id));
+["products-grid", "products-grid-femmes", "products-grid-hommes"].forEach(gridId => {
+  const el = document.getElementById(gridId);
+  if (el) {
+    el.addEventListener("click", (e) => {
+      const btn = e.target.closest(".btn-add");
+      if (!btn) return;
+      addToCart(Number(btn.dataset.id));
+    });
+  }
 });
 
 // ===== Toast =====
@@ -210,4 +269,6 @@ $("year").textContent = new Date().getFullYear();
 
 // ===== Init =====
 renderProducts();
+renderGenderGrid("femme", "products-grid-femmes");
+renderGenderGrid("homme", "products-grid-hommes");
 renderCartItems();

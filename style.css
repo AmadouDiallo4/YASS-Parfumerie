@@ -532,3 +532,44 @@ ul { list-style: none; }
   .products-grid { grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 1rem; }
   .categories-grid { grid-template-columns: 1fr 1fr; }
 }
+
+/* ===== Gender badge ===== */
+.product-gender {
+  display: inline-block;
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .05em;
+  padding: .15rem .55rem;
+  border-radius: 20px;
+  margin-left: .4rem;
+  vertical-align: middle;
+}
+.gender-femme { background: #fce4ec; color: #c2185b; }
+.gender-homme { background: #e3f2fd; color: #1565c0; }
+
+/* ===== Product image wrapper ===== */
+.product-img-wrapper {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: var(--radius) var(--radius) 0 0;
+  background: var(--clr-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.product-img-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.product-img-fallback,
+.product-img {
+  font-size: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
