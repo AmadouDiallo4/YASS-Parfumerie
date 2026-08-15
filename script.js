@@ -60,8 +60,8 @@ function renderProducts(filter = "all") {
     card.className = "product-card";
     card.dataset.id = product.id;
     const imgHtml = product.image
-      ? `<img class="product-img-photo" src="${escHtml(product.image)}" alt="${escHtml(product.name)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><div class="product-img product-img-fallback" aria-hidden="true" style="display:none">${product.icon}</div>`
-      : `<div class="product-img" aria-hidden="true">${product.icon}</div>`;
+      ? `<img class="product-img-photo" src="${escHtml(product.image)}" alt="${escHtml(product.name)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><div class="product-img product-img-fallback" aria-hidden="true" style="display:none">${escHtml(product.icon)}</div>`
+      : `<div class="product-img" aria-hidden="true">${escHtml(product.icon)}</div>`;
     card.innerHTML = `
       <div class="product-img-wrapper">${imgHtml}</div>
       <div class="product-info">
@@ -108,8 +108,8 @@ function renderGenderGrid(gender, gridId) {
     card.className = "product-card";
     card.dataset.id = product.id;
     const imgHtml = product.image
-      ? `<img class="product-img-photo" src="${escHtml(product.image)}" alt="${escHtml(product.name)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><div class="product-img product-img-fallback" aria-hidden="true" style="display:none">${product.icon}</div>`
-      : `<div class="product-img" aria-hidden="true">${product.icon}</div>`;
+      ? `<img class="product-img-photo" src="${escHtml(product.image)}" alt="${escHtml(product.name)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><div class="product-img product-img-fallback" aria-hidden="true" style="display:none">${escHtml(product.icon)}</div>`
+      : `<div class="product-img" aria-hidden="true">${escHtml(product.icon)}</div>`;
     card.innerHTML = `
       <div class="product-img-wrapper">${imgHtml}</div>
       <div class="product-info">
