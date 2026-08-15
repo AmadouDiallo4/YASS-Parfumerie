@@ -86,6 +86,7 @@ const products = [
 
 // ===== Cart State =====
 let cart = [];
+const ORDERS_STORAGE_KEY = "yass-parfums-orders";
 
 // ===== DOM Helpers =====
 const $ = (id) => document.getElementById(id);
@@ -170,6 +171,82 @@ function genderLabel(gender) {
 
 function formatPrice(n) {
   return n.toLocaleString("fr-FR") + " CFA";
+}
+
+function formatOrderDate(date) {
+  return date.toISOString().slice(0, 10);
+}
+
+function formatOrderTime(date) {
+  return date.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+}
+
+function getStoredOrders() {
+  try {
+    const raw = localStorage.getItem(ORDERS_STORAGE_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveOrder(order) {
+  const orders = getStoredOrders();
+  orders.push(order);
+  localStorage.setItem(ORDERS_STORAGE_KEY, JSON.stringify(orders));
+  return orders;
+}
+
+function csvValue(value) {
+  return `"${String(value ?? "").replace(/"/g, '""')}"`;
+}
+
+function buildItemsSummary(items) {
+  return items.map(item => `${displayName(item.name)} x${item.qty} (${formatPrice(item.unitPrice)} / unité)`).join(" | ");
+}
+
+function downloadOrdersCsvForDate(dateKey, orders) {
+  const headers = [
+    "Date commande",
+    "Heure commande",
+    "Nom",
+    "Prénom",
+    "Adresse/Ville",
+    "Téléphone",
+    "Email",
+    "Paiement",
+    "Produits",
+    "Total (CFA)",
+  ];
+
+  const rows = orders.map(order => ([
+    order.orderDate,
+    order.orderTime,
+    order.nom,
+    order.prenom,
+    order.adresse,
+    order.telephone,
+    order.email,
+    order.paiement,
+    buildItemsSummary(order.items),
+    order.total,
+  ]));
+
+  const csvContent = [headers, ...rows]
+    .map(row => row.map(csvValue).join(","))
+    .join("\n");
+
+  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `commandes-${dateKey}.csv`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
 }
 
 function displayName(name) {
@@ -321,11 +398,11 @@ $("btn-checkout").addEventListener("click", () => {
 // ===== Checkout Modal =====
 function openCheckout() {
   const lines = cart.map(item =>
-    `• ${escHtml(displayName(item.name))} x${item.qty} — ${formatPrice(item.price * item.qty)}`
+    `• ${escHtml(displayName(item.name))} — Qté : ${item.qty} — Prix : ${formatPrice(item.price * item.qty)}`
   ).join("\n");
   const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
 
-  $("checkout-summary").textContent = lines + `\n\nTotal : ${formatPrice(total)}`;
+  $("checkout-summary").textContent = `Résumé de votre commande\n\n${lines}\n\nTotal : ${formatPrice(total)}`;
   $("checkout-modal").classList.add("open");
   $("checkout-overlay").classList.add("active");
   document.body.style.overflow = "hidden";
@@ -357,18 +434,49 @@ $("checkout-form").addEventListener("submit", (e) => {
     return;
   }
 
+  if (cart.length === 0) {
+    msg.textContent = "Votre panier est vide.";
+    return;
+  }
+
+  const now = new Date();
+  const orderDate = formatOrderDate(now);
+  const orderTime = formatOrderTime(now);
   const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-  const itemLines = cart.map(item =>
-    `  - ${displayName(item.name)} x${item.qty} : ${formatPrice(item.price * item.qty)}`
+  const orderItems = cart.map(item => ({
+    name: item.name,
+    qty: item.qty,
+    unitPrice: item.price,
+    linePrice: item.price * item.qty,
+  }));
+  const itemLines = orderItems.map(item =>
+    `  - ${displayName(item.name)} x${item.qty} : ${formatPrice(item.linePrice)}`
   ).join("\n");
+
+  const order = {
+    orderDate,
+    orderTime,
+    nom,
+    prenom,
+    adresse,
+    telephone,
+    email,
+    paiement,
+    items: orderItems,
+    total,
+  };
+
+  const allOrders = saveOrder(order);
+  const ordersForDate = allOrders.filter(saved => saved.orderDate === orderDate);
+  downloadOrdersCsvForDate(orderDate, ordersForDate);
 
   const subject = encodeURIComponent("Nouvelle commande YASS Parfums");
   const body = encodeURIComponent(
-    `NOUVELLE COMMANDE\n\nClient :\nNom : ${nom}\nPrénom : ${prenom}\nAdresse/Ville : ${adresse}\nTéléphone : ${telephone}${email ? "\nEmail : " + email : ""}\n\nMoyen de paiement : ${paiement}\n\nProduits commandés :\n${itemLines}\n\nTotal : ${formatPrice(total)}`
+    `NOUVELLE COMMANDE (${orderDate} ${orderTime})\n\nClient :\nNom : ${nom}\nPrénom : ${prenom}\nAdresse/Ville : ${adresse}\nTéléphone : ${telephone}${email ? "\nEmail : " + email : ""}\n\nMoyen de paiement : ${paiement}\n\nProduits commandés :\n${itemLines}\n\nTotal : ${formatPrice(total)}`
   );
   window.location.href = `mailto:ada9091@gmail.com?subject=${subject}&body=${body}`;
 
-  msg.textContent = "Votre client mail s'ouvre pour confirmer la commande. ✅";
+  msg.textContent = "Commande enregistrée. Le CSV du jour est téléchargé et votre client mail s'ouvre. ✅";
   cart = [];
   updateCartUI();
   form.reset();
