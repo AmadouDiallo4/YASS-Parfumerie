@@ -573,3 +573,65 @@ ul { list-style: none; }
   width: 100%;
   height: 100%;
 }
+
+/* ===== Checkout Modal ===== */
+.checkout-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.5);
+  z-index: 1099;
+  opacity: 0; pointer-events: none;
+  transition: opacity .3s;
+}
+.checkout-overlay.active { opacity: 1; pointer-events: all; }
+
+.checkout-modal {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) scale(.96);
+  width: min(560px, 94vw);
+  max-height: 90vh;
+  overflow-y: auto;
+  background: var(--clr-white);
+  border-radius: var(--radius);
+  box-shadow: 0 12px 40px rgba(0,0,0,.25);
+  z-index: 1100;
+  opacity: 0; pointer-events: none;
+  transition: opacity .3s, transform .3s;
+}
+.checkout-modal.open { opacity: 1; pointer-events: all; transform: translate(-50%, -50%) scale(1); }
+
+.checkout-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.2rem 1.5rem;
+  border-bottom: 1px solid #eee;
+}
+.checkout-header h2 { font-family: var(--font-head); font-size: 1.3rem; margin: 0; }
+
+.btn-close-checkout {
+  background: none; border: none; font-size: 1.6rem; cursor: pointer; line-height: 1; color: var(--clr-text);
+}
+
+.checkout-body { padding: 1.2rem 1.5rem 1.5rem; }
+
+.checkout-summary {
+  background: #f9f5f0; border-radius: 8px;
+  padding: .8rem 1rem; font-size: .85rem; line-height: 1.6;
+  white-space: pre-wrap; margin-bottom: 1.2rem;
+  font-family: inherit; color: var(--clr-text);
+}
+
+.checkout-fields { display: flex; flex-direction: column; gap: .9rem; }
+.checkout-fields label { display: flex; flex-direction: column; gap: .3rem; font-size: .9rem; font-weight: 600; }
+.checkout-fields input,
+.checkout-fields select {
+  padding: .55rem .8rem; border: 1px solid #ddd; border-radius: 6px;
+  font-size: .95rem; font-family: inherit; color: var(--clr-text);
+  background: #fafafa;
+}
+.checkout-fields input:focus,
+.checkout-fields select:focus { outline: 2px solid var(--clr-accent); border-color: transparent; }
+
+.required { color: #c0392b; }
+.optional { font-weight: 400; font-size: .8rem; color: #888; }
+
+.checkout-note { font-size: .78rem; color: #888; margin: .6rem 0 1rem; }
