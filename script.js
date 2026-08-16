@@ -289,6 +289,17 @@ document.querySelectorAll(".category-card[data-filter]").forEach(card => {
   });
 });
 
+// ===== Navbar filter links =====
+document.querySelectorAll(".main-nav a[data-filter]").forEach(link => {
+  link.addEventListener("click", () => {
+    const filter = link.dataset.filter;
+    document.querySelectorAll(".tab").forEach(t => {
+      t.classList.toggle("active", t.dataset.filter === filter);
+    });
+    renderProducts(filter);
+  });
+});
+
 // ===== Cart Logic =====
 function addToCart(productId) {
   const product = products.find(p => p.id === productId);
