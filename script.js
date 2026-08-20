@@ -372,7 +372,8 @@ $("btn-checkout").addEventListener("click", () => {
     showToast("Votre panier est vide !");
     return;
   }
-  openCheckout();
+  localStorage.setItem("yass_checkout_cart", JSON.stringify(cart));
+  window.location.href = "commande.html";
 });
 
 // ===== Delegate Add-to-Cart Clicks =====
@@ -387,110 +388,9 @@ $("btn-checkout").addEventListener("click", () => {
   }
 });
 
-// ===== Checkout Modal =====
-const DELIVERY_FEE = 2000;
 
-function buildCheckoutSummary(paiement) {
-  const lines = cart.map(item =>
-    `• ${escHtml(displayName(item.name))} — Qté : ${item.qty} — Prix : ${formatPrice(item.price * item.qty)}`
-  ).join("\n");
-  const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-  const total = subtotal + DELIVERY_FEE;
-  return `Résumé de votre commande\n\n${lines}\nFrais de livraison : ${formatPrice(DELIVERY_FEE)}\n\nTotal : ${formatPrice(total)}`;
-}
 
-function openCheckout() {
-  const paiementSelect = $("checkout-form").querySelector('[name="checkout-paiement"]');
-  $("checkout-summary").textContent = buildCheckoutSummary(paiementSelect.value);
-  $("checkout-modal").classList.add("open");
-  $("checkout-overlay").classList.add("active");
-  document.body.style.overflow = "hidden";
-}
 
-function closeCheckout() {
-  $("checkout-modal").classList.remove("open");
-  $("checkout-overlay").classList.remove("active");
-  document.body.style.overflow = "";
-}
-
-$("btn-close-checkout").addEventListener("click", closeCheckout);
-$("checkout-overlay").addEventListener("click", closeCheckout);
-
-$("checkout-form").querySelector('[name="checkout-paiement"]').addEventListener("change", (e) => {
-  $("checkout-summary").textContent = buildCheckoutSummary(e.target.value);
-  $("checkout-payment-info").hidden = e.target.value !== "Wave / Orange Money";
-});
-
-$("checkout-form").addEventListener("submit", (e) => {
-  e.preventDefault();
-  const form = e.target;
-  const msg = $("checkout-msg");
-
-  const nom       = form.querySelector('[name="checkout-nom"]').value.trim();
-  const prenom    = form.querySelector('[name="checkout-prenom"]').value.trim();
-  const adresse   = form.querySelector('[name="checkout-adresse"]').value.trim();
-  const telephone = form.querySelector('[name="checkout-telephone"]').value.trim();
-  const email     = form.querySelector('[name="checkout-email"]').value.trim();
-  const paiement  = form.querySelector('[name="checkout-paiement"]').value;
-
-  if (!nom || !prenom || !adresse || !telephone || !paiement) {
-    msg.textContent = "Veuillez remplir tous les champs obligatoires (*).";
-    return;
-  }
-
-  if (cart.length === 0) {
-    msg.textContent = "Votre panier est vide.";
-    return;
-  }
-
-  const now = new Date();
-  const orderDate = formatOrderDate(now);
-  const orderTime = formatOrderTime(now);
-  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0) + DELIVERY_FEE;
-  const orderItems = cart.map(item => ({
-    name: item.name,
-    qty: item.qty,
-    unitPrice: item.price,
-    linePrice: item.price * item.qty,
-  }));
-  const itemLines = orderItems.map(item =>
-    `  - ${displayName(item.name)} x${item.qty} : ${formatPrice(item.linePrice)}`
-  ).join("\n");
-
-  const order = {
-    orderDate,
-    orderTime,
-    nom,
-    prenom,
-    adresse,
-    telephone,
-    email,
-    paiement,
-    items: orderItems,
-    total,
-  };
-
-  try {
-    downloadOrderCsv(orderDate, order);
-  } catch {
-    msg.textContent = "Une erreur est survenue lors de la génération du fichier CSV.";
-    return;
-  }
-
-  const deliveryFeeLine = `\nFrais de livraison : ${formatPrice(DELIVERY_FEE)}`;
-  const subject = encodeURIComponent("Nouvelle commande YASS Parfums");
-  const body = encodeURIComponent(
-    `NOUVELLE COMMANDE (${orderDate} ${orderTime})\n\nClient :\nNom : ${nom}\nPrénom : ${prenom}\nAdresse/Ville : ${adresse}\nTéléphone : ${telephone}${email ? "\nEmail : " + email : ""}\n\nMoyen de paiement : ${paiement}\n\nProduits commandés :\n${itemLines}${deliveryFeeLine}\n\nTotal : ${formatPrice(total)}`
-  );
-  msg.textContent = "Commande enregistrée. Le CSV du jour est téléchargé et votre client mail s'ouvre. ✅";
-  setTimeout(() => {
-    window.location.href = `mailto:ada9091@gmail.com?subject=${subject}&body=${body}`;
-  }, 150);
-  cart = [];
-  updateCartUI();
-  form.reset();
-  setTimeout(closeCheckout, 2500);
-});
 
 
 
