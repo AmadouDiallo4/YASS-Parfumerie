@@ -83,8 +83,12 @@ const products = [
 
 async function seed() {
   const adminEmail = process.env.ADMIN_EMAIL || 'admin@yassparfums.com';
-  const adminPassword = process.env.ADMIN_PASSWORD || 'Admin@12345';
+  const adminPassword = process.env.ADMIN_PASSWORD;
   const adminName = process.env.ADMIN_NAME || 'Administrateur YASS';
+
+  if (!adminPassword || adminPassword.length < 8) {
+    throw new Error('ADMIN_PASSWORD must be defined with at least 8 characters before seeding.');
+  }
 
   const passwordHash = await bcrypt.hash(adminPassword, 10);
 

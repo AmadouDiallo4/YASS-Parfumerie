@@ -36,7 +36,7 @@ Variables principales:
 - `JWT_SECRET` : secret JWT (>=32 caractères)
 - `PORT` : port API (défaut `4000`)
 - `CORS_ORIGIN` : origine frontend autorisée
-- `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `ADMIN_NAME` : admin de seed
+- `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `ADMIN_NAME` : admin de seed (`ADMIN_PASSWORD` obligatoire)
 
 ## Prisma: migration et seed
 

@@ -13,7 +13,7 @@ const envSchema = z.object({
   CORS_ORIGIN: z.string().default('*'),
   UPLOAD_BASE_URL: z.string().optional(),
   ADMIN_EMAIL: z.string().email().default('admin@yassparfums.com'),
-  ADMIN_PASSWORD: z.string().min(8).default('Admin@12345'),
+  ADMIN_PASSWORD: z.string().min(8, 'ADMIN_PASSWORD must be at least 8 characters'),
   ADMIN_NAME: z.string().default('Administrateur YASS')
 });
 

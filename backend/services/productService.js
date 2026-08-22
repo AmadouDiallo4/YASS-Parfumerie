@@ -9,6 +9,22 @@ const productInclude = {
   }
 };
 
+const pickProductData = (payload) => ({
+  nom: payload.nom,
+  description: payload.description,
+  prix: payload.prix,
+  ancienPrix: payload.ancienPrix,
+  categorieId: payload.categorieId,
+  marque: payload.marque,
+  volume: payload.volume,
+  genre: payload.genre,
+  imagePrincipale: payload.imagePrincipale,
+  stock: payload.stock,
+  featured: payload.featured,
+  promotion: payload.promotion,
+  actif: payload.actif
+});
+
 const mapProduct = (product) => ({
   ...product,
   prix: Number(product.prix),
@@ -127,10 +143,11 @@ const createProduct = async (payload) => {
     : await generateUniqueSlug('product', payload.nom, prisma);
 
   const images = payload.images || [];
+  const baseData = pickProductData(payload);
 
   const product = await prisma.product.create({
     data: {
-      ...payload,
+      ...baseData,
       slug,
       images: {
         create: images.map((image, index) => ({
@@ -152,13 +169,13 @@ const updateProduct = async (id, payload) => {
     await ensureCategoryExists(payload.categorieId);
   }
 
-  const nextData = { ...payload };
+  const nextData = pickProductData(payload);
 
   if (payload.nom || payload.slug) {
     nextData.slug = await generateUniqueSlug('product', payload.slug || payload.nom, prisma, id);
   }
 
-  if (payload.images) {
+  if (Array.isArray(payload.images)) {
     nextData.images = {
       deleteMany: {},
       create: payload.images.map((image, index) => ({
