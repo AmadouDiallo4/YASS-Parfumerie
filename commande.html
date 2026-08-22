@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Finaliser votre commande – YASS Parfums" />
+  <title>Finaliser ma commande – YASS Parfums</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+</head>
+<body class="checkout-page">
+
+  <!-- ===== HEADER ===== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-y">Y</span>ASS <span class="logo-parfums">Parfums</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- ===== CHECKOUT PAGE ===== -->
+  <main class="co-page container">
+    <a href="index.html" class="co-back-link">← Retour à la boutique</a>
+
+    <h1 class="co-title">Finaliser ma commande</h1>
+
+    <div class="co-layout">
+
+      <!-- Order Summary -->
+      <section class="co-summary-card" aria-label="Résumé de la commande">
+        <h2 class="co-section-title">Récapitulatif</h2>
+        <ul class="co-items-list" id="co-items-list"></ul>
+        <div class="co-totals">
+          <div class="co-totals-row">
+            <span>Sous-total</span>
+            <span id="co-subtotal"></span>
+          </div>
+          <div class="co-totals-row">
+            <span>Frais de livraison</span>
+            <span id="co-delivery"></span>
+          </div>
+          <div class="co-totals-row co-total-final">
+            <span>Total</span>
+            <span id="co-total"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Customer Form -->
+      <section class="co-form-card">
+        <h2 class="co-section-title">Vos informations</h2>
+
+        <div id="co-empty-msg" class="co-empty" hidden>
+          <p>Votre panier est vide.</p>
+          <a href="index.html" class="btn btn-primary">Retour à la boutique</a>
+        </div>
+
+        <form id="co-form" class="co-form" novalidate>
+          <div class="co-fields">
+            <label>
+              Nom <span class="required">*</span>
+              <input type="text" name="co-nom" placeholder="Votre nom" required autocomplete="family-name" />
+            </label>
+            <label>
+              Prénom <span class="required">*</span>
+              <input type="text" name="co-prenom" placeholder="Votre prénom" required autocomplete="given-name" />
+            </label>
+            <label class="co-field-full">
+              Adresse / Ville <span class="required">*</span>
+              <input type="text" name="co-adresse" placeholder="Ex : Dakar, Almadies" required autocomplete="street-address" />
+            </label>
+            <label>
+              Téléphone <span class="required">*</span>
+              <input type="tel" name="co-telephone" placeholder="Ex : +221 77 000 00 00" required autocomplete="tel" />
+            </label>
+            <label>
+              Email <span class="optional">(optionnel)</span>
+              <input type="email" name="co-email" placeholder="Votre email" autocomplete="email" />
+            </label>
+            <label class="co-field-full">
+              Moyen de paiement <span class="required">*</span>
+              <select name="co-paiement" required>
+                <option value="">— Choisir —</option>
+                <option value="Wave / Orange Money">Wave / Orange Money</option>
+                <option value="Paiement à la livraison">Paiement à la livraison</option>
+              </select>
+            </label>
+            <p id="co-payment-info" class="co-payment-info" hidden>
+              Veuillez envoyer votre paiement au numéro Wave / Orange Money du gérant :<br>
+              <strong>+221 77 226 90 22</strong>
+            </p>
+          </div>
+
+          <p class="co-note">* Champs obligatoires</p>
+          <button type="submit" class="btn btn-primary btn-full co-submit">Commander</button>
+          <p class="form-msg" id="co-msg" aria-live="polite"></p>
+        </form>
+      </section>
+
+    </div><!-- /.co-layout -->
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p class="footer-logo"><span class="logo-y">Y</span>ASS <span class="logo-parfums">Parfums</span></p>
+      <p class="footer-copy">&copy; <span id="year"></span> YASS Parfums. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <script src="checkout.js"></script>
+</body>
+</html>
