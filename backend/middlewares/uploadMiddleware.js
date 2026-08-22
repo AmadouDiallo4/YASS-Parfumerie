@@ -1,6 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-const crypto = require('crypto');
 const multer = require('multer');
 const ApiError = require('../utils/apiError');
 
@@ -11,17 +10,8 @@ if (!fs.existsSync(uploadDir)) {
 
 const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp'];
 
-const storage = multer.diskStorage({
-  destination: (_req, _file, cb) => cb(null, uploadDir),
-  filename: (_req, file, cb) => {
-    const ext = path.extname(file.originalname).toLowerCase();
-    const filename = `${Date.now()}-${crypto.randomUUID()}${ext}`;
-    cb(null, filename);
-  }
-});
-
 const upload = multer({
-  storage,
+  storage: multer.memoryStorage(),
   limits: {
     fileSize: 5 * 1024 * 1024
   },

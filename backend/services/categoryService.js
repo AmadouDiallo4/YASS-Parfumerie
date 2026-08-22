@@ -3,6 +3,14 @@ const ApiError = require('../utils/apiError');
 const { generateUniqueSlug } = require('./slugService');
 
 const listCategories = async () => prisma.category.findMany({ orderBy: { nom: 'asc' } });
+const removeUndefined = (obj) =>
+  Object.fromEntries(Object.entries(obj).filter(([, value]) => value !== undefined));
+
+const pickCategoryData = (payload) => ({
+  nom: payload.nom,
+  description: payload.description,
+  actif: payload.actif
+});
 
 const getCategoryById = async (id) => {
   const category = await prisma.category.findUnique({ where: { id } });
@@ -14,13 +22,14 @@ const getCategoryById = async (id) => {
 };
 
 const createCategory = async (payload) => {
+  const baseData = removeUndefined(pickCategoryData(payload));
   const slug = payload.slug
     ? await generateUniqueSlug('category', payload.slug, prisma)
     : await generateUniqueSlug('category', payload.nom, prisma);
 
   return prisma.category.create({
     data: {
-      ...payload,
+      ...baseData,
       slug
     }
   });
@@ -29,14 +38,9 @@ const createCategory = async (payload) => {
 const updateCategory = async (id, payload) => {
   await getCategoryById(id);
 
-  const nextData = { ...payload };
-  if (payload.nom || payload.slug) {
-    nextData.slug = await generateUniqueSlug(
-      'category',
-      payload.slug || payload.nom,
-      prisma,
-      id
-    );
+  const nextData = removeUndefined(pickCategoryData(payload));
+  if (payload.slug) {
+    nextData.slug = await generateUniqueSlug('category', payload.slug, prisma, id);
   }
 
   return prisma.category.update({

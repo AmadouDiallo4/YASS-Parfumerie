@@ -9,6 +9,9 @@ const productInclude = {
   }
 };
 
+const removeUndefined = (obj) =>
+  Object.fromEntries(Object.entries(obj).filter(([, value]) => value !== undefined));
+
 const pickProductData = (payload) => ({
   nom: payload.nom,
   description: payload.description,
@@ -143,7 +146,7 @@ const createProduct = async (payload) => {
     : await generateUniqueSlug('product', payload.nom, prisma);
 
   const images = payload.images || [];
-  const baseData = pickProductData(payload);
+  const baseData = removeUndefined(pickProductData(payload));
 
   const product = await prisma.product.create({
     data: {
@@ -169,10 +172,10 @@ const updateProduct = async (id, payload) => {
     await ensureCategoryExists(payload.categorieId);
   }
 
-  const nextData = pickProductData(payload);
+  const nextData = removeUndefined(pickProductData(payload));
 
-  if (payload.nom || payload.slug) {
-    nextData.slug = await generateUniqueSlug('product', payload.slug || payload.nom, prisma, id);
+  if (payload.slug) {
+    nextData.slug = await generateUniqueSlug('product', payload.slug, prisma, id);
   }
 
   if (Array.isArray(payload.images)) {

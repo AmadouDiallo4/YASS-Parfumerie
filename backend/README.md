@@ -35,7 +35,7 @@ Variables principales:
 - `DATABASE_URL` : connexion MySQL Hostinger
 - `JWT_SECRET` : secret JWT (>=32 caractères)
 - `PORT` : port API (défaut `4000`)
-- `CORS_ORIGIN` : origine frontend autorisée
+- `CORS_ORIGIN` : origine frontend autorisée (ou liste séparée par virgules)
 - `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `ADMIN_NAME` : admin de seed (`ADMIN_PASSWORD` obligatoire)
 
 ## Prisma: migration et seed

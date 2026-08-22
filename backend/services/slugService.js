@@ -1,12 +1,19 @@
 const slugify = require('../utils/slugify');
+const ApiError = require('../utils/apiError');
+
+const ALLOWED_MODELS = new Set(['product', 'category']);
 
 const generateUniqueSlug = async (model, sourceValue, prisma, excludeId = null) => {
+  if (!ALLOWED_MODELS.has(model)) {
+    throw new ApiError(400, 'Invalid model for slug generation');
+  }
+
   const baseSlug = slugify(sourceValue);
-  let slug = baseSlug;
-  let index = 1;
+  let index = 0;
   const MAX_ATTEMPTS = 100;
 
-  while (index <= MAX_ATTEMPTS) {
+  while (index < MAX_ATTEMPTS) {
+    const slug = index === 0 ? baseSlug : `${baseSlug}-${index}`;
     const existing = await prisma[model].findFirst({
       where: {
         slug,
@@ -19,7 +26,6 @@ const generateUniqueSlug = async (model, sourceValue, prisma, excludeId = null) 
       return slug;
     }
 
-    slug = `${baseSlug}-${index}`;
     index += 1;
   }
 
