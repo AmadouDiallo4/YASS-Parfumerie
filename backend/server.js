@@ -31,7 +31,10 @@ const startServer = async () => {
   // 2. Verify database connectivity before accepting traffic
   try {
     await prisma.$connect();
-    console.log('[startup] Database connection established.');
+
+    app.listen(env.PORT, '0.0.0.0', () => {
+      console.log(`YASS backend running on port ${env.PORT}`);
+    });
   } catch (error) {
     console.error('[startup] Failed to connect to the database:', error);
     process.exit(1);
