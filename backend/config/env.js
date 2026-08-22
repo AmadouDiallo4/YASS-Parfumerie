@@ -3,6 +3,15 @@ const dotenv = require('dotenv');
 const { z } = require('zod');
 
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
+console.log(
+  'DATABASE_URL utilisée:',
+  process.env.DATABASE_URL
+    ? process.env.DATABASE_URL.replace(
+        /^mysql:\/\/([^:]+):([^@]+)@/,
+        'mysql://$1:****@'
+      )
+    : 'ABSENTE'
+);
 
 const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
