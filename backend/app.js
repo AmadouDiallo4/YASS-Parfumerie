@@ -15,6 +15,8 @@ const swaggerSpec = require('./config/swagger');
 const { notFoundHandler, errorHandler } = require('./middlewares/errorHandler');
 
 const app = express();
+const frontendRoot = path.resolve(__dirname, '..');
+const frontendIndexFile = path.join(frontendRoot, 'index.html');
 const allowedOrigins = env.CORS_ORIGIN.split(',')
   .map((origin) => origin.trim())
   .filter(Boolean);
@@ -49,6 +51,34 @@ app.use('/api/settings', settingsRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+app.use('/images', express.static(path.join(frontendRoot, 'images')));
+app.get('/style.css', (_req, res) => res.sendFile(path.join(frontendRoot, 'style.css')));
+app.get('/script.js', (_req, res) => res.sendFile(path.join(frontendRoot, 'script.js')));
+app.get('/checkout.js', (_req, res) => res.sendFile(path.join(frontendRoot, 'checkout.js')));
+app.get('/commande.html', (_req, res) => res.sendFile(path.join(frontendRoot, 'commande.html')));
+app.get('/index.html', (_req, res) => res.sendFile(frontendIndexFile));
+app.get('/', (_req, res) => res.sendFile(frontendIndexFile));
+
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api/') || req.path.startsWith('/uploads/')) {
+    next();
+    return;
+  }
+
+  if (path.extname(req.path)) {
+    next();
+    return;
+  }
+
+  const acceptHeader = req.headers.accept || '';
+  if (!acceptHeader.includes('text/html')) {
+    next();
+    return;
+  }
+
+  res.sendFile(frontendIndexFile);
+});
 
 app.use(notFoundHandler);
 app.use(errorHandler);
