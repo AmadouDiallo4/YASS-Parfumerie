@@ -17,9 +17,9 @@ const { notFoundHandler, errorHandler } = require('./middlewares/errorHandler');
 
 const app = express();
 const frontendRoots = [
+  path.resolve(__dirname, 'public'),
   path.resolve(__dirname, '..'),
-  path.resolve(__dirname),
-  path.resolve(__dirname, 'public')
+  path.resolve(__dirname)
 ];
 const frontendRoot = frontendRoots.find((rootDir) => fs.existsSync(path.join(rootDir, 'index.html')));
 const frontendIndexFile = frontendRoot ? path.join(frontendRoot, 'index.html') : null;
