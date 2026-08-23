@@ -38,13 +38,11 @@ const errorHandler = (error, _req, res, _next) => {
     .filter((line) => !/DATABASE_URL|password|secret|token/i.test(line))
     .join('\n');
 
-  console.error('[500]', {
-    name: error?.constructor?.name,
-    message: error?.message,
-    code: error?.code,
-    meta: error?.meta,
-    stack: safeStack
-  });
+  console.error('[500] name:', error?.name);
+  console.error('[500] message:', error?.message);
+  console.error('[500] code:', error?.code);
+  console.error('[500] meta:', JSON.stringify(error?.meta));
+  console.error('[500] stack:', safeStack);
 
   return res.status(500).json({
     success: false,
