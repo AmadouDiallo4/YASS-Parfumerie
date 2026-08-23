@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="YASS Parfums – Boutique en ligne de parfums, cosmétiques, santé & bien-être et divers." />
+  <title>YASS Parfums – Boutique en ligne</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-y">Y</span>ASS <span class="logo-parfums">Parfums</span>
+      </a>
+
+      <nav class="main-nav" id="main-nav">
+        <a href="#categories">ACCUEIL</a>
+        <a href="#femmes">FEMMES</a>
+        <a href="#hommes">HOMMES</a>
+        <a href="#produits">PRODUITS</a>
+        <a href="#produits" data-filter="electronique">ÉLECTRONIQUE</a>
+        <a href="#produits" data-filter="cosmetique">COSMÉTIQUES</a>
+        <a href="#apropos">À PROPOS</a>
+        <a href="#contact">CONTACT</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="btn-cart" id="btn-cart" aria-label="Panier">
+          🛒 <span class="cart-count" id="cart-count">0</span>
+        </button>
+        <button class="hamburger" id="hamburger" aria-label="Menu">&#9776;</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="hero-content">
+      <p class="hero-eyebrow">Bienvenue chez</p>
+      <h1>YASS Parfums</h1>
+      <p class="hero-sub">Parfums d'exception, cosmétiques, encens et bien-être —<br>l'élégance à portée de main.</p>
+      <a href="#produits" class="btn btn-primary">Découvrir la boutique</a>
+    </div>
+  </section>
+
+  <!-- ===== CATEGORIES ===== -->
+  <section class="categories section" id="categories">
+    <div class="container">
+      <h2 class="section-title">Nos catégories</h2>
+      <div class="categories-grid">
+        <a href="#produits" class="category-card" data-filter="parfum">
+          <div class="category-icon">🌸</div>
+          <h3>Parfums</h3>
+          <p>Parfums femme, homme, huiles parfumées et brumes</p>
+        </a>
+        <a href="#produits" class="category-card" data-filter="cosmetique">
+          <div class="category-icon">💄</div>
+          <h3>Cosmétiques</h3>
+          <p>Soins, hygiène, savons, dentifrices et huiles cosmétiques</p>
+        </a>
+        <a href="#produits" class="category-card" data-filter="sante-bien-etre">
+          <div class="category-icon">🧘</div>
+          <h3>Santé &amp; bien-être</h3>
+          <p>Produits dédiés au confort, au soin et au bien-être quotidien</p>
+        </a>
+        <a href="#produits" class="category-card" data-filter="divers">
+          <div class="category-icon">🛍️</div>
+          <h3>Divers</h3>
+          <p>Électronique et autres articles à découvrir</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FEMMES ===== -->
+  <section class="products section" id="femmes">
+    <div class="container">
+      <h2 class="section-title">Parfums Femmes</h2>
+      <div class="products-grid" id="products-grid-femmes">
+        <!-- Injected by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== HOMMES ===== -->
+  <section class="products section" id="hommes">
+    <div class="container">
+      <h2 class="section-title">Parfums Hommes</h2>
+      <div class="products-grid" id="products-grid-hommes">
+        <!-- Injected by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PRODUCTS ===== -->
+  <section class="products section" id="produits">
+    <div class="container">
+      <h2 class="section-title">Nos produits</h2>
+
+      <!-- Filter tabs -->
+      <div class="filter-tabs" role="tablist">
+        <button class="tab active" data-filter="all" role="tab">Tous</button>
+        <button class="tab" data-filter="femme" role="tab">Femmes</button>
+        <button class="tab" data-filter="homme" role="tab">Hommes</button>
+        <button class="tab" data-filter="parfum" role="tab">Parfums</button>
+        <button class="tab" data-filter="cosmetique" role="tab">Cosmétiques</button>
+        <button class="tab" data-filter="sante-bien-etre" role="tab">Santé &amp; bien-être</button>
+        <button class="tab" data-filter="divers" role="tab">Divers</button>
+      </div>
+
+      <div class="products-grid" id="products-grid">
+        <!-- Injected by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section class="about section" id="apropos">
+    <div class="container about-inner">
+      <div class="about-text">
+        <h2 class="section-title left">Notre histoire</h2>
+        <p>YASS Parfums est née de la passion pour les fragrances rares et les soins naturels. Nous sélectionnons avec soin chaque produit pour vous offrir le meilleur de la beauté, livré directement chez vous.</p>
+        <p>Notre mission : rendre l'élégance accessible à tous, avec des produits de qualité, des prix transparents et un service client irréprochable.</p>
+      </div>
+      <div class="about-img" aria-hidden="true">
+        <div class="about-img-placeholder">🌺</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section class="contact section" id="contact">
+    <div class="container">
+      <h2 class="section-title">Contactez-nous</h2>
+      <div class="contact-grid">
+        <div class="contact-info">
+          <p>📧 <a href="mailto:ada9091@gmail.com">ada9091@gmail.com</a></p>
+          <p>📞 <a href="tel:+33659918348">+33 6 59 91 83 48</a> / <a href="tel:+221772269022">+221 77 226 90 22</a></p>
+          <p>🌐 <a href="https://yassparfums.com" target="_blank" rel="noopener">yassparfums.com</a></p>
+          <p>📦 Livraison disponible partout</p>
+        </div>
+        <form class="contact-form" id="contact-form" novalidate>
+          <input type="text" name="nom" placeholder="Votre nom" required aria-label="Nom" />
+          <input type="email" name="email" placeholder="Votre email" required aria-label="Email" />
+          <textarea name="message" rows="4" placeholder="Votre message" required aria-label="Message"></textarea>
+          <button type="submit" class="btn btn-primary">Envoyer</button>
+          <p class="form-msg" id="form-msg" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p class="footer-logo"><span class="logo-y">Y</span>ASS <span class="logo-parfums">Parfums</span></p>
+      <p class="footer-copy">&copy; <span id="year"></span> YASS Parfums. Tous droits réservés.</p>
+      <nav class="footer-nav">
+        <a href="#categories">Catégories</a>
+        <a href="#produits">Produits</a>
+        <a href="#apropos">À propos</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+
+  <!-- ===== CART SIDEBAR ===== -->
+  <aside class="cart-sidebar" id="cart-sidebar" aria-label="Panier">
+    <div class="cart-header">
+      <h2>Mon panier</h2>
+      <button class="btn-close-cart" id="btn-close-cart" aria-label="Fermer le panier">&times;</button>
+    </div>
+    <ul class="cart-items" id="cart-items"></ul>
+    <div class="cart-footer">
+      <p class="cart-total">Total : <strong id="cart-total">0 CFA</strong></p>
+      <button class="btn btn-primary btn-full" id="btn-checkout">Commander</button>
+    </div>
+  </aside>
+  <div class="cart-overlay" id="cart-overlay"></div>
+
+  <!-- ===== TOAST ===== -->
+  <div class="toast" id="toast" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
