@@ -91,8 +91,8 @@ const buildWhere = (query) => {
 };
 
 const listProducts = async (query) => {
-  const page = query.page;
-  const limit = query.limit;
+  const page = Math.max(1, parseInt(query.page, 10) || 1);
+  const limit = Math.max(1, parseInt(query.limit, 10) || 20);
   const skip = (page - 1) * limit;
   const where = buildWhere(query);
 
