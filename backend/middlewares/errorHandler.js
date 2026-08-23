@@ -33,6 +33,19 @@ const errorHandler = (error, _req, res, _next) => {
     });
   }
 
+  const safeStack = (error?.stack || '')
+    .split('\n')
+    .filter((line) => !/DATABASE_URL|password|secret|token/i.test(line))
+    .join('\n');
+
+  console.error('[500]', {
+    name: error?.constructor?.name,
+    message: error?.message,
+    code: error?.code,
+    meta: error?.meta,
+    stack: safeStack
+  });
+
   return res.status(500).json({
     success: false,
     message: 'Internal server error'
