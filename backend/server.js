@@ -38,6 +38,16 @@ const shutdown = async (signal) => {
   }
 };
 
+process.on('SIGTERM', () => {
+  console.log(`[signal] SIGTERM pid=${process.pid}`);
+  shutdown('SIGTERM');
+});
+
+process.on('SIGINT', () => {
+  console.log(`[signal] SIGINT pid=${process.pid}`);
+  shutdown('SIGINT');
+});
+
 const startServer = async () => {
   // 1. Verify required environment variables (env.js already throws on invalid
   //    config via Zod, so reaching here means the schema passed).
@@ -66,10 +76,6 @@ const startServer = async () => {
       console.error('[runtime] HTTP server error:', err);
     }
   });
-
-  // 4. Register graceful shutdown signals
-  process.on('SIGTERM', () => shutdown('SIGTERM'));
-  process.on('SIGINT', () => shutdown('SIGINT'));
 };
 
 startServer();
