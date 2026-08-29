@@ -66,6 +66,10 @@ if (frontendRoot && frontendIndexFile) {
   app.get('/commande.html', (_req, res) => res.sendFile(path.join(frontendRoot, 'commande.html')));
   app.get('/index.html', (_req, res) => res.sendFile(frontendIndexFile));
   app.get('/', (_req, res) => res.sendFile(frontendIndexFile));
+  app.get('/admin.html', (_req, res) => res.sendFile(path.join(__dirname, 'public', 'admin.html')));
+  app.get('/admin.css',  (_req, res) => res.sendFile(path.join(__dirname, 'public', 'admin.css')));
+  app.get('/admin.js',   (_req, res) => res.sendFile(path.join(__dirname, 'public', 'admin.js')));
+  app.get('/admin',      (_req, res) => res.redirect('/admin.html'));
 
   app.get('/{*frontendPath}', (req, res, next) => {
     if (req.path.startsWith('/api/') || req.path.startsWith('/uploads/')) {
