@@ -9,7 +9,7 @@
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:deploy": "prisma migrate deploy",
-    "prisma:seed": "prisma db seed",
+    "prisma:seed": "node prisma/seed.js",
     "test": "node -e \"console.log('No tests configured')\"",
     "postinstall": "env -u PRISMA_QUERY_ENGINE_BINARY prisma generate && (chmod +x node_modules/.prisma/client/query-engine-debian-openssl-3.0.x || true)"
   },

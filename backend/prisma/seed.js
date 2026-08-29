@@ -1,9 +1,12 @@
 const fs = require('fs');
 const path = require('path');
 const bcrypt = require('bcrypt');
-const { PrismaClient } = require('@prisma/client');
 
-const prisma = new PrismaClient();
+// Load env vars before importing config/prisma so DATABASE_URL is available
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
+
+// Use the shared Prisma instance (sets PRISMA_QUERY_ENGINE_BINARY in production)
+const prisma = require('../config/prisma');
 
 const CATEGORY_DEFINITIONS = {
   'parfums-hommes': { nom: 'Parfums Hommes', slug: 'parfums-hommes', description: 'Sélection masculine', actif: true },
