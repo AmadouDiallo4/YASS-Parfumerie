@@ -65,7 +65,7 @@ const TITLES   = { dashboard: 'Dashboard', products: 'Produits', categories: 'Ca
 function navigate(section) {
   SECTIONS.forEach((s) => {
     const sec = $('section' + s.charAt(0).toUpperCase() + s.slice(1));
-    if (sec) toggle(sec, s === section);
+    if (sec) sec.classList.toggle('active', s === section);
     const nav = document.querySelector(`.nav-item[data-section="${s}"]`);
     if (nav) nav.classList.toggle('active', s === section);
   });
@@ -87,7 +87,6 @@ function openSidebar() {
   $('sidebar').classList.add('open');
   const ov = $('sidebarOverlay');
   show(ov);
-  ov.removeAttribute('hidden');
 }
 function closeSidebar() {
   $('sidebar').classList.remove('open');
@@ -226,10 +225,10 @@ async function loadProducts(page = 1, recherche = '') {
           <td>${p.stock ?? '—'}</td>
           <td><span class="badge ${p.actif ? 'badge--green' : 'badge--red'}">${p.actif ? 'Actif' : 'Inactif'}</span></td>
           <td class="actions-cell">
-            <button class="btn-icon edit" title="Modifier" onclick="editProduct(${p.id})">
+            <button class="btn-icon edit" title="Modifier" data-action="edit-product" data-id="${p.id}">
               <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
             </button>
-            <button class="btn-icon del" title="Supprimer" onclick="confirmDeleteProduct(${p.id}, '${escHtml(p.nom).replace(/'/g, "\\'")}')">
+            <button class="btn-icon del" title="Supprimer" data-action="delete-product" data-id="${p.id}" data-name="${escHtml(p.nom)}">
               <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
             </button>
           </td>
@@ -237,23 +236,28 @@ async function loadProducts(page = 1, recherche = '') {
       }).join('');
     }
 
-    renderPagination($('productPagination'), page, totalPages, (p) => loadProducts(p, recherche));
+    renderPagination($('productPagination'), page, totalPages, (p) => {
+      const q = $('productSearch').value.trim();
+      loadProducts(p, q);
+    });
   } catch (err) {
     tbody.innerHTML = `<tr><td colspan="7" class="table-empty">${escHtml(err.message)}</td></tr>`;
   }
 }
 
-function renderPagination(container, current, total, cb) {
+function renderPagination(container, current, total, jumpFn) {
   if (total <= 1) { container.innerHTML = ''; return; }
-  let html = `<button ${current === 1 ? 'disabled' : ''} onclick="(${cb})(${current - 1})">‹</button>`;
+  // jumpFn is stored globally so inline onclick can call it safely
+  window._paginationJump = jumpFn;
+  let html = `<button ${current === 1 ? 'disabled' : ''} onclick="_paginationJump(${current - 1})">‹</button>`;
   for (let i = 1; i <= total; i++) {
     if (total > 7 && Math.abs(i - current) > 2 && i !== 1 && i !== total) {
       if (i === 2 || i === total - 1) html += '<button disabled>…</button>';
       continue;
     }
-    html += `<button class="${i === current ? 'active' : ''}" onclick="(${cb})(${i})">${i}</button>`;
+    html += `<button class="${i === current ? 'active' : ''}" onclick="_paginationJump(${i})">${i}</button>`;
   }
-  html += `<button ${current === total ? 'disabled' : ''} onclick="(${cb})(${current + 1})">›</button>`;
+  html += `<button ${current === total ? 'disabled' : ''} onclick="_paginationJump(${current + 1})">›</button>`;
   container.innerHTML = html;
 }
 
@@ -419,10 +423,10 @@ async function loadCategories() {
         <td>${escHtml(c.description || '—')}</td>
         <td><span class="badge ${c.actif !== false ? 'badge--green' : 'badge--red'}">${c.actif !== false ? 'Actif' : 'Inactif'}</span></td>
         <td class="actions-cell">
-          <button class="btn-icon edit" title="Modifier" onclick="editCategory(${c.id})">
+          <button class="btn-icon edit" title="Modifier" data-action="edit-category" data-id="${c.id}">
             <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
           </button>
-          <button class="btn-icon del" title="Supprimer" onclick="confirmDeleteCategory(${c.id}, '${escHtml(c.nom).replace(/'/g, "\\'")}')">
+          <button class="btn-icon del" title="Supprimer" data-action="delete-category" data-id="${c.id}" data-name="${escHtml(c.nom)}">
             <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
           </button>
         </td>
@@ -620,6 +624,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Add product
   $('addProductBtn').addEventListener('click', () => openProductModal());
 
+  // Products table delegation
+  $('productsBody').addEventListener('click', (e) => {
+    const btn = e.target.closest('button[data-action]');
+    if (!btn) return;
+    const { action, id, name } = btn.dataset;
+    if (action === 'edit-product')   editProduct(Number(id));
+    if (action === 'delete-product') confirmDeleteProduct(Number(id), name || '');
+  });
+
   // Product search
   $('productSearch').addEventListener('input', (e) => {
     clearTimeout(productSearchTimer);
@@ -629,6 +642,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Add category
   $('addCategoryBtn').addEventListener('click', () => openCategoryModal());
+
+  // Categories table delegation
+  $('categoriesBody').addEventListener('click', (e) => {
+    const btn = e.target.closest('button[data-action]');
+    if (!btn) return;
+    const { action, id, name } = btn.dataset;
+    if (action === 'edit-category')   editCategory(Number(id));
+    if (action === 'delete-category') confirmDeleteCategory(Number(id), name || '');
+  });
 
   // Settings form
   $('settingsForm').addEventListener('submit', saveSettings);
