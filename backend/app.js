@@ -14,6 +14,7 @@ const uploadRoutes = require('./routes/uploadRoutes');
 const dashboardRoutes = require('./routes/dashboardRoutes');
 const swaggerSpec = require('./config/swagger');
 const { notFoundHandler, errorHandler } = require('./middlewares/errorHandler');
+const { writeLimiter } = require('./middlewares/rateLimiters');
 
 const app = express();
 const frontendRoots = [
@@ -66,6 +67,10 @@ if (frontendRoot && frontendIndexFile) {
   app.get('/commande.html', (_req, res) => res.sendFile(path.join(frontendRoot, 'commande.html')));
   app.get('/index.html', (_req, res) => res.sendFile(frontendIndexFile));
   app.get('/', (_req, res) => res.sendFile(frontendIndexFile));
+  app.get('/admin.html', writeLimiter, (_req, res) => res.sendFile(path.join(__dirname, 'public', 'admin.html')));
+  app.get('/admin.css',  writeLimiter, (_req, res) => res.sendFile(path.join(__dirname, 'public', 'admin.css')));
+  app.get('/admin.js',   writeLimiter, (_req, res) => res.sendFile(path.join(__dirname, 'public', 'admin.js')));
+  app.get('/admin',      writeLimiter, (_req, res) => res.redirect('/admin.html'));
 
   app.get('/{*frontendPath}', (req, res, next) => {
     if (req.path.startsWith('/api/') || req.path.startsWith('/uploads/')) {

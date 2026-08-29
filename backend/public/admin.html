@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YASS Admin</title>
+  <link rel="stylesheet" href="/admin.css" />
+</head>
+<body>
+
+<!-- ========== LOGIN SCREEN ========== -->
+<div id="loginScreen" class="login-screen">
+  <div class="login-card">
+    <div class="login-logo">
+      <span class="logo-y">Y</span><span class="logo-ass">ASS</span>
+      <p class="login-subtitle">Espace Administration</p>
+    </div>
+    <form id="loginForm" novalidate>
+      <div class="field-group">
+        <label for="loginEmail">Adresse e-mail</label>
+        <input type="email" id="loginEmail" placeholder="admin@yass.fr" required autocomplete="email" />
+      </div>
+      <div class="field-group">
+        <label for="loginPassword">Mot de passe</label>
+        <input type="password" id="loginPassword" placeholder="••••••••" required autocomplete="current-password" />
+      </div>
+      <p id="loginError" class="error-msg" hidden></p>
+      <button type="submit" class="btn-primary btn-full" id="loginBtn">Se connecter</button>
+    </form>
+  </div>
+</div>
+
+<!-- ========== ADMIN SHELL ========== -->
+<div id="adminShell" class="admin-shell" hidden>
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <span class="logo-y">Y</span><span class="logo-ass">ASS</span>
+      <button id="sidebarClose" class="sidebar-close" aria-label="Fermer le menu">&#10005;</button>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-item active" data-section="dashboard">
+        <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+        Dashboard
+      </a>
+      <a href="#" class="nav-item" data-section="products">
+        <svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.07-.44.18-.88.18-1.33A4.67 4.67 0 0 0 13.33 0c-1.74 0-3.41.81-4.5 2.09A5.99 5.99 0 0 0 4.5 0 4.67 4.67 0 0 0 0 4.67c0 .45.11.89.18 1.33H0v2h20V6zm-6.67-4c1.47 0 2.67 1.2 2.67 2.67 0 .45-.11.89-.31 1.33h-4.71A3.32 3.32 0 0 1 10.68 5a3.32 3.32 0 0 1 2.65-3zM4.5 2c1.47 0 2.67 1.2 2.67 2.67 0 .45-.11.89-.31 1.33H2.15c-.2-.44-.31-.88-.31-1.33A2.68 2.68 0 0 1 4.5 2zM0 20c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8H0v12z"/></svg>
+        Produits
+      </a>
+      <a href="#" class="nav-item" data-section="categories">
+        <svg viewBox="0 0 24 24"><path d="M12 2l-5.5 9h11L12 2zm0 3.84L14.6 10h-5.2L12 5.84zM17.5 13c-2.49 0-4.5 2.01-4.5 4.5S15.01 22 17.5 22s4.5-2.01 4.5-4.5S19.99 13 17.5 13zm0 7c-1.38 0-2.5-1.12-2.5-2.5S16.12 15 17.5 15s2.5 1.12 2.5 2.5S18.88 20 17.5 20zM3 21.5h8v-8H3v8zm2-6h4v4H5v-4z"/></svg>
+        Catégories
+      </a>
+      <a href="#" class="nav-item" data-section="settings">
+        <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94s-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96a7.1 7.1 0 0 0-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.07.62-.07.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.37 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.57 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+        Paramètres
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <button id="logoutBtn" class="btn-logout">
+        <svg viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5-5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+        Déconnexion
+      </button>
+      <p id="adminName" class="admin-name"></p>
+    </div>
+  </aside>
+
+  <!-- Overlay mobile -->
+  <div id="sidebarOverlay" class="sidebar-overlay" hidden></div>
+
+  <!-- Main content -->
+  <div class="main-wrapper">
+    <header class="topbar">
+      <button id="menuToggle" class="menu-toggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <h1 id="pageTitle" class="page-title">Dashboard</h1>
+      <div class="topbar-right">
+        <span id="topbarAdmin" class="topbar-admin"></span>
+      </div>
+    </header>
+
+    <main class="main-content">
+
+      <!-- ---- DASHBOARD ---- -->
+      <section id="sectionDashboard" class="section active">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon stat-icon--blue">
+              <svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.07-.44.18-.88.18-1.33A4.67 4.67 0 0 0 13.33 0c-1.74 0-3.41.81-4.5 2.09A5.99 5.99 0 0 0 4.5 0 4.67 4.67 0 0 0 0 4.67c0 .45.11.89.18 1.33H0v2h20V6zM0 20c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8H0v12z"/></svg>
+            </div>
+            <div>
+              <p class="stat-label">Total produits</p>
+              <p class="stat-value" id="statTotal">—</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon stat-icon--green">
+              <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+            </div>
+            <div>
+              <p class="stat-label">Produits actifs</p>
+              <p class="stat-value" id="statActive">—</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon stat-icon--red">
+              <svg viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/></svg>
+            </div>
+            <div>
+              <p class="stat-label">Rupture de stock</p>
+              <p class="stat-value" id="statOutOfStock">—</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon stat-icon--gold">
+              <svg viewBox="0 0 24 24"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>
+            </div>
+            <div>
+              <p class="stat-label">En promotion</p>
+              <p class="stat-value" id="statPromo">—</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon stat-icon--purple">
+              <svg viewBox="0 0 24 24"><path d="M12 2l-5.5 9h11L12 2zm0 3.84L14.6 10h-5.2L12 5.84zM17.5 13c-2.49 0-4.5 2.01-4.5 4.5S15.01 22 17.5 22s4.5-2.01 4.5-4.5S19.99 13 17.5 13zm0 7c-1.38 0-2.5-1.12-2.5-2.5S16.12 15 17.5 15s2.5 1.12 2.5 2.5S18.88 20 17.5 20zM3 21.5h8v-8H3v8zm2-6h4v4H5v-4z"/></svg>
+            </div>
+            <div>
+              <p class="stat-label">Catégories</p>
+              <p class="stat-value" id="statCat">—</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Derniers produits ajoutés</h2>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Nom</th>
+                  <th>Prix</th>
+                  <th>Stock</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody id="latestProductsBody">
+                <tr><td colspan="4" class="table-empty">Chargement…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---- PRODUCTS ---- -->
+      <section id="sectionProducts" class="section">
+        <div class="section-toolbar">
+          <div class="search-wrap">
+            <input type="search" id="productSearch" placeholder="Rechercher un produit…" class="search-input" />
+          </div>
+          <button class="btn-primary" id="addProductBtn">+ Nouveau produit</button>
+        </div>
+        <div class="card">
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Nom</th>
+                  <th>Catégorie</th>
+                  <th>Prix</th>
+                  <th>Stock</th>
+                  <th>Actif</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="productsBody">
+                <tr><td colspan="7" class="table-empty">Chargement…</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="pagination" id="productPagination"></div>
+        </div>
+      </section>
+
+      <!-- ---- CATEGORIES ---- -->
+      <section id="sectionCategories" class="section">
+        <div class="section-toolbar">
+          <h2 class="section-subtitle">Gestion des catégories</h2>
+          <button class="btn-primary" id="addCategoryBtn">+ Nouvelle catégorie</button>
+        </div>
+        <div class="card">
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Nom</th>
+                  <th>Slug</th>
+                  <th>Description</th>
+                  <th>Actif</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="categoriesBody">
+                <tr><td colspan="5" class="table-empty">Chargement…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---- SETTINGS ---- -->
+      <section id="sectionSettings" class="section">
+        <div class="card settings-card">
+          <div class="card-header">
+            <h2 class="card-title">Paramètres de la boutique</h2>
+          </div>
+          <form id="settingsForm" novalidate>
+            <div class="settings-grid">
+              <div class="field-group">
+                <label>Nom de la boutique</label>
+                <input type="text" name="nomBoutique" maxlength="160" />
+              </div>
+              <div class="field-group">
+                <label>Email</label>
+                <input type="email" name="email" maxlength="200" />
+              </div>
+              <div class="field-group">
+                <label>Téléphone</label>
+                <input type="text" name="telephone" maxlength="40" />
+              </div>
+              <div class="field-group">
+                <label>WhatsApp</label>
+                <input type="text" name="whatsapp" maxlength="40" />
+              </div>
+              <div class="field-group field-group--full">
+                <label>Adresse</label>
+                <input type="text" name="adresse" maxlength="300" />
+              </div>
+              <div class="field-group">
+                <label>Facebook</label>
+                <input type="url" name="facebook" maxlength="500" />
+              </div>
+              <div class="field-group">
+                <label>Instagram</label>
+                <input type="url" name="instagram" maxlength="500" />
+              </div>
+              <div class="field-group">
+                <label>TikTok</label>
+                <input type="url" name="tiktok" maxlength="500" />
+              </div>
+              <div class="field-group">
+                <label>Logo (URL)</label>
+                <input type="text" name="logo" maxlength="500" />
+              </div>
+              <div class="field-group">
+                <label>Bannière (URL)</label>
+                <input type="text" name="banniere" maxlength="500" />
+              </div>
+              <div class="field-group field-group--full">
+                <label>Message d'accueil</label>
+                <textarea name="messageAccueil" rows="3" maxlength="5000"></textarea>
+              </div>
+              <div class="field-group field-group--full">
+                <label>Informations livraison</label>
+                <textarea name="livraison" rows="3" maxlength="5000"></textarea>
+              </div>
+              <div class="field-group field-group--full">
+                <label>Politique de retour</label>
+                <textarea name="politiqueRetour" rows="3" maxlength="5000"></textarea>
+              </div>
+              <div class="field-group field-group--full">
+                <label>Conditions générales</label>
+                <textarea name="conditions" rows="3" maxlength="5000"></textarea>
+              </div>
+            </div>
+            <p id="settingsMsg" class="success-msg" hidden></p>
+            <p id="settingsErr" class="error-msg" hidden></p>
+            <div class="form-actions">
+              <button type="submit" class="btn-primary" id="saveSettingsBtn">Enregistrer</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<!-- ========== MODAL ========== -->
+<div id="modal" class="modal" hidden role="dialog" aria-modal="true">
+  <div class="modal-backdrop"></div>
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3 id="modalTitle" class="modal-title"></h3>
+      <button id="modalClose" class="modal-close" aria-label="Fermer">&#10005;</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-footer">
+      <button id="modalCancel" class="btn-secondary">Annuler</button>
+      <button id="modalConfirm" class="btn-primary">Confirmer</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== TOAST ========== -->
+<div id="toast" class="toast" hidden></div>
+
+<script src="/admin.js"></script>
+</body>
+</html>
