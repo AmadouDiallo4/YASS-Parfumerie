@@ -50,7 +50,7 @@ async function apiFetch(path, options = {}) {
 
 // ---- FORMAT ----
 function fmtPrice(n) {
-  return Number(n).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' });
+  return Number(n).toLocaleString('fr-FR', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + '\u00a0FCFA';
 }
 function fmtDate(d) {
   return new Date(d).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
@@ -207,7 +207,8 @@ async function loadProducts(page = 1, recherche = '') {
     const params = new URLSearchParams({ page, limit: PRODUCT_LIMIT, tri: 'newest' });
     if (recherche) params.set('recherche', recherche);
     const res = await apiFetch(`/api/products?${params}`);
-    const { items = [], total = 0, totalPages = 1 } = res.data || {};
+    const items = res.items || [];
+    const { total = 0, totalPages = 1 } = res.pagination || {};
 
     if (!items.length) {
       tbody.innerHTML = '<tr><td colspan="7" class="table-empty">Aucun produit trouvé</td></tr>';
@@ -284,12 +285,12 @@ async function openProductModal(product = null) {
       <textarea id="pDescription" rows="3">${escHtml(p.description || '')}</textarea>
     </div>
     <div class="field-group">
-      <label>Prix (€) *</label>
-      <input type="number" id="pPrix" value="${p.prix || ''}" min="0" step="0.01" />
+      <label>Prix (FCFA) *</label>
+      <input type="number" id="pPrix" value="${p.prix || ''}" min="0" step="1" />
     </div>
     <div class="field-group">
-      <label>Ancien prix (€)</label>
-      <input type="number" id="pAncienPrix" value="${p.ancienPrix || ''}" min="0" step="0.01" />
+      <label>Ancien prix (FCFA)</label>
+      <input type="number" id="pAncienPrix" value="${p.ancienPrix || ''}" min="0" step="1" />
     </div>
     <div class="field-group">
       <label>Catégorie *</label>
