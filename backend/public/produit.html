@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Détail produit YASS Parfums" />
+  <title>Produit – YASS Parfums</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+</head>
+<body class="product-page">
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-y">Y</span>ASS <span class="logo-parfums">Parfums</span>
+      </a>
+
+      <nav class="main-nav" id="main-nav">
+        <a href="index.html#categories">ACCUEIL</a>
+        <a href="index.html#femmes">FEMMES</a>
+        <a href="index.html#hommes">HOMMES</a>
+        <a href="index.html#produits">PRODUITS</a>
+        <a href="index.html#apropos">À PROPOS</a>
+        <a href="index.html#contact">CONTACT</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="btn-cart" id="btn-cart" aria-label="Panier">
+          🛒 <span class="cart-count" id="cart-count">0</span>
+        </button>
+        <button class="hamburger" id="hamburger" aria-label="Menu">&#9776;</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="pd-page section">
+    <div class="container">
+      <a href="index.html#produits" class="pd-back-link">← Retour aux produits</a>
+      <section id="product-detail-root" class="pd-shell" aria-live="polite">
+        <p class="pd-state">Chargement du produit…</p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p class="footer-logo"><span class="logo-y">Y</span>ASS <span class="logo-parfums">Parfums</span></p>
+      <p class="footer-copy">&copy; <span id="year"></span> YASS Parfums. Tous droits réservés.</p>
+      <nav class="footer-nav">
+        <a href="index.html#categories">Catégories</a>
+        <a href="index.html#produits">Produits</a>
+        <a href="index.html#apropos">À propos</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <aside class="cart-sidebar" id="cart-sidebar" aria-label="Panier">
+    <div class="cart-header">
+      <h2>Mon panier</h2>
+      <button class="btn-close-cart" id="btn-close-cart" aria-label="Fermer le panier">&times;</button>
+    </div>
+    <ul class="cart-items" id="cart-items"></ul>
+    <div class="cart-footer">
+      <p class="cart-total">Total : <strong id="cart-total">0 FCFA</strong></p>
+      <button class="btn btn-primary btn-full" id="btn-checkout">Commander</button>
+    </div>
+  </aside>
+  <div class="cart-overlay" id="cart-overlay"></div>
+
+  <div class="toast" id="toast" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+  <script src="produit.js"></script>
+</body>
+</html>
