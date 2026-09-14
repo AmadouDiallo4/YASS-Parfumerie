@@ -63,8 +63,10 @@ if (frontendRoot && frontendIndexFile) {
   app.use('/images', express.static(path.join(frontendRoot, 'images')));
   app.get('/style.css', (_req, res) => res.sendFile(path.join(frontendRoot, 'style.css')));
   app.get('/script.js', (_req, res) => res.sendFile(path.join(frontendRoot, 'script.js')));
+  app.get('/produit.js', writeLimiter, (_req, res) => res.sendFile(path.join(frontendRoot, 'produit.js')));
   app.get('/checkout.js', (_req, res) => res.sendFile(path.join(frontendRoot, 'checkout.js')));
   app.get('/commande.html', (_req, res) => res.sendFile(path.join(frontendRoot, 'commande.html')));
+  app.get('/produit.html', writeLimiter, (_req, res) => res.sendFile(path.join(frontendRoot, 'produit.html')));
   app.get('/index.html', (_req, res) => res.sendFile(frontendIndexFile));
   app.get('/', (_req, res) => res.sendFile(frontendIndexFile));
   app.get('/admin.html', writeLimiter, (_req, res) => res.sendFile(path.join(__dirname, 'public', 'admin.html')));
